@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bilateral Focus — Stay Calm. Stay Sharp. Keep Working.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#080a0f; --bg2:#0d1018; --surface:#12151e;
+      --border:rgba(125,232,200,0.08);
+      --cyan:#7de8c8; --cyan-dim:rgba(125,232,200,0.15); --cyan-glow:rgba(125,232,200,0.4);
+      --blue:#4a9eff; --blue-dim:rgba(74,158,255,0.15);
+      --amber:#f0c040; --red:#ff6b6b;
+      --text:#e8e6df; --text-dim:#888890; --text-muted:#444450;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.35}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:linear-gradient(to bottom,rgba(8,10,15,0.95),transparent);backdrop-filter:blur(12px)}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow);animation:navpulse 2.5s ease-in-out infinite}
+    @keyframes navpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.8)}}
+    .nav-name{font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--cyan);font-weight:600}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+    .nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-cta{padding:9px 22px;border-radius:100px;border:0.5px solid var(--cyan);background:transparent;color:var(--cyan)!important;font-family:'Syne',sans-serif;font-size:12px!important;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s!important;text-decoration:none}
+    .nav-cta:hover{background:var(--cyan-dim)!important;box-shadow:0 0 20px var(--cyan-dim)}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 48px 100px;text-align:center}
+    .hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(74,158,255,0.06) 0%,rgba(125,232,200,0.04) 40%,transparent 70%);pointer-events:none;animation:herobreath 6s ease-in-out infinite}
+    @keyframes herobreath{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.1);opacity:0.7}}
+    .hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:28px;display:flex;align-items:center;gap:12px;opacity:0;animation:fadeup 0.8s ease 0.2s forwards}
+    .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:32px;height:0.5px;background:var(--cyan);opacity:0.5}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,96px);font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:12px;opacity:0;animation:fadeup 0.8s ease 0.4s forwards}
+    .hero-title em{font-style:italic;color:var(--cyan)}
+    .hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);font-weight:300;font-style:italic;color:var(--text-dim);margin-bottom:48px;max-width:560px;line-height:1.5;opacity:0;animation:fadeup 0.8s ease 0.6s forwards}
+    .hero-actions{display:flex;align-items:center;gap:16px;margin-bottom:80px;opacity:0;animation:fadeup 0.8s ease 0.8s forwards}
+    @keyframes fadeup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    .btn-primary{padding:14px 32px;border-radius:100px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s;box-shadow:0 0 30px rgba(125,232,200,0.3)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(125,232,200,0.5)}
+    .btn-secondary{padding:14px 32px;border-radius:100px;background:transparent;color:var(--text-dim);font-family:'Syne',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:0.5px solid var(--border);cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .btn-secondary:hover{border-color:rgba(125,232,200,0.3);color:var(--text)}
+
+    /* DEMO BALL */
+    .hero-demo{position:relative;width:100%;max-width:900px;height:120px;opacity:0;animation:fadeup 0.8s ease 1s forwards}
+    .demo-track{position:absolute;top:50%;left:0;right:0;height:0.5px;background:linear-gradient(90deg,transparent,var(--border),var(--cyan-dim),var(--border),transparent);transform:translateY(-50%)}
+    .demo-ball{position:absolute;top:50%;width:44px;height:44px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%);box-shadow:0 0 10px 4px rgba(100,180,255,0.99),0 0 24px 8px rgba(80,150,255,0.75),0 0 48px 14px rgba(60,120,255,0.45),0 0 80px 20px rgba(40,90,220,0.22);animation:demobounce 3s ease-in-out infinite alternate}
+    @keyframes demobounce{0%{left:4%}100%{left:96%}}
+    .demo-label{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+
+    /* STATS */
+    .stats-bar{display:flex;align-items:center;justify-content:center;padding:32px 48px;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);background:var(--bg2)}
+    .stat{flex:1;max-width:240px;text-align:center;padding:0 32px;border-right:0.5px solid var(--border)}
+    .stat:last-child{border-right:none}
+    .stat-number{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--cyan);line-height:1;margin-bottom:8px}
+    .stat-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);line-height:1.5}
+
+    /* SHARED SECTION */
+    section{padding:120px 48px;max-width:1200px;margin:0 auto}
+    .section-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+    .section-eyebrow::before{content:'';display:block;width:24px;height:0.5px;background:var(--cyan)}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,58px);font-weight:300;line-height:1.1;color:var(--text);margin-bottom:20px}
+    .section-title em{font-style:italic;color:var(--cyan)}
+    .section-body{font-size:15px;line-height:1.8;color:var(--text-dim);max-width:580px}
+
+    /* HOW IT WORKS */
+    .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:80px}
+    .how-steps{display:flex;flex-direction:column;gap:40px}
+    .step{display:flex;gap:24px;align-items:flex-start;opacity:0;transform:translateX(-20px);transition:all 0.6s ease}
+    .step.visible{opacity:1;transform:translateX(0)}
+    .step-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:0.1em;margin-top:4px;min-width:28px}
+    .step-content h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px}
+    .step-content p{font-size:13px;line-height:1.7;color:var(--text-dim)}
+    .how-visual{position:relative;height:440px;background:var(--surface);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .how-visual-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(74,158,255,0.06) 0%,transparent 70%)}
+    .how-ball-wrap{position:absolute;width:100%;height:60px;top:50%;transform:translateY(-50%)}
+    .how-ball{position:absolute;width:38px;height:38px;border-radius:50%;top:50%;transform:translateY(-50%);background:radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.7) 60%,rgba(140,210,255,1.0) 80%,rgba(255,255,255,0.8) 100%);animation:howball 2.5s ease-in-out infinite alternate}
+    @keyframes howball{0%{left:6%;box-shadow:0 0 10px 4px rgba(100,180,255,0.99),0 0 26px 8px rgba(80,150,255,0.7),0 0 50px 14px rgba(60,120,255,0.4)}100%{left:88%;box-shadow:0 0 10px 4px rgba(100,180,255,0.99),0 0 26px 8px rgba(80,150,255,0.7),0 0 50px 14px rgba(60,120,255,0.4)}}
+    .how-visual-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+    .how-cursor{position:absolute;width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);top:58%;animation:cursor 5s ease-in-out infinite}
+    @keyframes cursor{0%{left:38%;opacity:0.4}40%{left:52%;opacity:0.7}70%{left:32%;opacity:0.4}100%{left:38%;opacity:0.4}}
+
+    /* SCIENCE */
+    .science-section{background:var(--bg2);padding:120px 0;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
+    .science-inner{max-width:1200px;margin:0 auto;padding:0 48px}
+    .science-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px}
+    .science-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .science-card{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:32px 28px;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s}
+    .science-card:hover{border-color:rgba(125,232,200,0.2);transform:translateY(-4px)}
+    .science-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)}
+    .science-icon{font-size:28px;margin-bottom:20px;display:block}
+    .science-card h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.4}
+    .science-card p{font-size:13px;line-height:1.7;color:var(--text-dim)}
+    .card-cite{margin-top:16px;padding-top:16px;border-top:0.5px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.04em;line-height:1.5}
+
+    /* FEATURES */
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:80px;border:0.5px solid var(--border);border-radius:16px;overflow:hidden}
+    .feature{padding:40px 32px;background:var(--surface);border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);transition:background 0.3s}
+    .feature:hover{background:#161920}
+    .feature:nth-child(3n){border-right:none}
+    .feature:nth-last-child(-n+3){border-bottom:none}
+    .feature-icon{width:40px;height:40px;border-radius:10px;background:var(--cyan-dim);border:0.5px solid rgba(125,232,200,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:20px}
+    .feature h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px}
+    .feature p{font-size:13px;line-height:1.7;color:var(--text-dim)}
+
+    /* HR */
+    .hr-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:120px 48px;max-width:1200px;margin:0 auto}
+    .hr-visual{background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:36px;position:relative;overflow:hidden}
+    .hr-visual::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)}
+    .hr-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px}
+    .hr-bpm{font-family:'DM Mono',monospace;font-size:52px;color:var(--cyan);line-height:1}
+    .hr-bpm span{font-size:14px;color:var(--text-muted);display:block;margin-top:4px}
+    .hr-status{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(240,192,64,0.1);border:0.5px solid rgba(240,192,64,0.3);border-radius:100px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--amber)}
+    .hr-status-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 1.2s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+    .hr-bar-bg{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;margin-top:8px}
+    .hr-bar-fill{height:100%;width:62%;background:linear-gradient(90deg,var(--cyan),var(--amber));border-radius:2px;animation:fillp 3s ease-in-out infinite}
+    @keyframes fillp{0%,100%{width:55%}50%{width:72%}}
+    .bar-label{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin-top:20px}
+    .bar-label span:first-child{color:var(--text-muted)}
+    .bar-label span:last-child{color:var(--amber)}
+    .hr-bar-fill2{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--blue));animation:breathb 8s ease-in-out infinite}
+    @keyframes breathb{0%{width:0%}45%{width:100%}50%{width:100%}95%{width:0%}100%{width:0%}}
+    .bar-label2 span:last-child{color:var(--cyan);animation:blabel 8s ease-in-out infinite}
+    .coming-soon{margin-top:24px;padding:12px 16px;background:rgba(74,158,255,0.06);border:0.5px solid rgba(74,158,255,0.15);border-radius:8px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);text-align:center}
+
+    /* TESTIMONIALS */
+    .testimonials{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:100px 48px}
+    .testimonials-inner{max-width:1200px;margin:0 auto}
+    .testimonials-header{text-align:center;margin-bottom:60px}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .testimonial{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:32px 28px;transition:border-color 0.3s}
+    .testimonial:hover{border-color:rgba(125,232,200,0.15)}
+    .testimonial-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;font-weight:300;line-height:1.6;color:var(--text);margin-bottom:24px}
+    .testimonial-author{display:flex;align-items:center;gap:12px}
+    .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--cyan-dim);border:0.5px solid rgba(125,232,200,0.2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--cyan)}
+    .t-info strong{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+    .t-info span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--text-muted);text-transform:uppercase}
+
+    /* PRICING */
+    .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;max-width:800px;margin-left:auto;margin-right:auto}
+    .pricing-card{background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:40px 36px;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s}
+    .pricing-card:hover{transform:translateY(-4px)}
+    .pricing-card.featured{border-color:rgba(125,232,200,0.3);background:linear-gradient(135deg,rgba(125,232,200,0.04),var(--surface))}
+    .pricing-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+    .pricing-badge{display:inline-block;padding:4px 12px;background:var(--cyan-dim);border:0.5px solid rgba(125,232,200,0.3);border-radius:100px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:24px}
+    .pricing-tier{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+    .pricing-price{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--text);line-height:1;margin-bottom:6px}
+    .pricing-price sup{font-size:24px;vertical-align:super;color:var(--text-dim)}
+    .pricing-period{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:32px}
+    .pricing-features{list-style:none;margin-bottom:36px}
+    .pricing-features li{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim);padding:8px 0;border-bottom:0.5px solid var(--border)}
+    .pricing-features li:last-child{border-bottom:none}
+    .pricing-features li::before{content:'—';color:var(--cyan);font-size:12px}
+    .pricing-features li.locked{opacity:0.4}
+    .pricing-features li.locked::before{content:'×';color:var(--text-muted)}
+    .pricing-btn{display:block;width:100%;padding:13px;border-radius:100px;text-align:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .pricing-btn.free{border:0.5px solid var(--border);color:var(--text-dim);background:transparent}
+    .pricing-btn.free:hover{border-color:rgba(125,232,200,0.3);color:var(--text)}
+    .pricing-btn.pro{background:var(--cyan);color:var(--bg);border:none;box-shadow:0 0 30px rgba(125,232,200,0.25)}
+    .pricing-btn.pro:hover{box-shadow:0 0 50px rgba(125,232,200,0.45);transform:translateY(-1px)}
+
+    /* CTA */
+    .cta-section{text-align:center;padding:160px 48px;position:relative;overflow:hidden}
+    .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(125,232,200,0.04) 0%,transparent 70%);pointer-events:none}
+
+    /* FOOTER */
+    footer{border-top:0.5px solid var(--border);padding:60px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
+    .footer-logo{display:flex;align-items:center;gap:10px}
+    .footer-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);opacity:0.5}
+    .footer-name{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)}
+    .footer-copy{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.08em}
+    .footer-links{display:flex;gap:28px}
+    .footer-links a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--text)}
+
+    /* REVEAL */
+    .reveal,.step{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+    .reveal.visible,.step.visible{opacity:1;transform:translateY(0)}
+    .step{transform:translateX(-20px)}
+    .step.visible{transform:translateX(0)}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-dot"></div>
+    <span class="nav-name">Bilateral Focus</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#science">Science</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow">Bilateral Stimulation Technology</div>
+  <h1 class="hero-title">Stay <em>calm.</em><br>Stay sharp.<br>Keep working.</h1>
+  <p class="hero-subtitle">A subtle overlay that uses bilateral stimulation to reduce anxiety, sharpen focus, and regulate stress — without ever breaking your flow.</p>
+  <div class="hero-actions">
+    <a href="#download" class="btn-primary">⬇ Download for Mac</a>
+    <a href="#science" class="btn-secondary">Read the Science</a>
+  </div>
+  <div class="hero-demo">
+    <div class="demo-track"></div>
+    <div class="demo-ball"></div>
+    <div class="demo-label">Live bilateral stimulation preview — watch the ball</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-number">30+</div><div class="stat-label">Randomized controlled<br>trials support BLS</div></div>
+  <div class="stat"><div class="stat-number">528</div><div class="stat-label">Hz therapeutic<br>frequency embedded</div></div>
+  <div class="stat"><div class="stat-number">4s</div><div class="stat-label">Breathing cycle guided<br>by heart rate response</div></div>
+  <div class="stat"><div class="stat-number">0</div><div class="stat-label">Interruptions —<br>works while you work</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-eyebrow">How It Works</div>
+  <h2 class="section-title">Engineered for people<br>who <em>can't stop.</em></h2>
+  <p class="section-body">Most focus tools ask you to pause. Bilateral Focus works while you work — a barely-visible overlay running silently in the background of your screen, doing the heavy lifting your nervous system never gets a break from.</p>
+  <div class="how-grid">
+    <div class="how-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content"><h3>The overlay activates</h3><p>A semi-transparent orb appears at the edge of your screen — subtle enough to ignore, present enough to work. It bounces left to right while you write, code, trade, or create.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content"><h3>Your peripheral vision does the work</h3><p>You don't need to focus on it. The rhythmic left-right motion is processed by your peripheral visual system, triggering the same neurological pathways activated in clinical EMDR therapy.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content"><h3>Binaural audio locks in the effect</h3><p>An optional 528Hz tone pans in sync with the ball — left ear, right ear, back and forth. This dual-channel bilateral effect deepens the calming response.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content"><h3>Heart rate guides the response</h3><p>When stress spikes are detected, the orb shifts to a breathing-guide pulse — expanding and contracting to coach your nervous system back to baseline without stopping work.</p></div>
+      </div>
+    </div>
+    <div class="how-visual">
+      <div class="how-visual-bg"></div>
+      <div class="how-ball-wrap"><div class="how-ball"></div></div>
+      <div class="how-cursor"></div>
+      <div class="how-visual-label">Mouse avoidance — ball never blocks your work</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCIENCE -->
+<div class="science-section" id="science">
+  <div class="science-inner">
+    <div class="science-header reveal">
+      <div>
+        <div class="section-eyebrow">The Science</div>
+        <h2 class="section-title">Not wellness.<br><em>Neuroscience.</em></h2>
+      </div>
+      <p class="section-body">Bilateral stimulation isn't a wellness trend. It's the core mechanism behind EMDR — one of the most rigorously studied therapies in existence, with over 30 published randomized controlled trials. We took that mechanism and built a passive, always-on tool around it.</p>
+    </div>
+    <div class="science-cards">
+      <div class="science-card reveal">
+        <span class="science-icon">🧠</span>
+        <h3>Bilateral stimulation dampens the amygdala</h3>
+        <p>Rhythmic left-right sensory input suppresses excitability in the basolateral nucleus of the amygdala — the brain's primary fear and stress center — through activation of the superior colliculus and mediodorsal thalamus.</p>
+        <div class="card-cite">Baek et al. (2019) — Systematic review of bilateral stimulation mechanisms</div>
+      </div>
+      <div class="science-card reveal">
+        <span class="science-icon">⚡</span>
+        <h3>Proven across 30+ randomized controlled trials</h3>
+        <p>EMDR therapy — built on bilateral stimulation — sits on the same evidence tier as Cognitive Processing Therapy in U.S. Department of Veterans Affairs clinical guidelines. It measurably reduces amygdala reactivity and alters brainwave patterns associated with threat.</p>
+        <div class="card-cite">VA/DoD Clinical Guidelines (2023) — Wright et al. meta-analysis (2024)</div>
+      </div>
+      <div class="science-card reveal">
+        <span class="science-icon">🎵</span>
+        <h3>528Hz — embedded in every session</h3>
+        <p>Our binaural layer uses 528Hz paired with synchronized stereo panning. This dual-channel stimulus engages both hemispheres simultaneously, creating a deeper regulatory effect than visual stimulation alone.</p>
+        <div class="card-cite">PLOS One fMRI study — alternating auditory stimulation and amygdala response</div>
+      </div>
+      <div class="science-card reveal">
+        <span class="science-icon">👁️</span>
+        <h3>Peripheral vision, not focused attention</h3>
+        <p>Unlike traditional EMDR which requires active eye tracking, Bilateral Focus works through peripheral vision — meaning you never stop working. The effect happens automatically through your visual system's ambient processing channels.</p>
+        <div class="card-cite">Stingl et al. (2025) — British Journal of Psychiatry Open</div>
+      </div>
+      <div class="science-card reveal">
+        <span class="science-icon">💓</span>
+        <h3>Heart rate-driven adaptive response</h3>
+        <p>When your heart rate rises above your personal baseline, the app enters guided breathing mode. The 4-second inhale, 6-second exhale cycle activates the parasympathetic nervous system and reduces cortisol — while you keep working.</p>
+        <div class="card-cite">HRV breathing research — parasympathetic nervous system activation</div>
+      </div>
+      <div class="science-card reveal">
+        <span class="science-icon">🔄</span>
+        <h3>Passive, not active — the key difference</h3>
+        <p>Every existing bilateral stimulation tool requires a dedicated session. Bilateral Focus is the first passive implementation — designed to run continuously in the background, providing cumulative regulatory benefit across an entire workday.</p>
+        <div class="card-cite">Novel application — continuous peripheral bilateral stimulation during cognitive work</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-eyebrow">Features</div>
+  <h2 class="section-title">Everything you need.<br><em>Nothing you don't.</em></h2>
+  <div class="features-grid">
+    <div class="feature"><div class="feature-icon">⚪</div><h3>Transparent overlay</h3><p>A semi-transparent orb that lives above all your windows, across every desktop and Space on your Mac.</p></div>
+    <div class="feature"><div class="feature-icon">🖱️</div><h3>Mouse avoidance</h3><p>The ball intelligently moves away from your cursor so it never blocks anything you're working on.</p></div>
+    <div class="feature"><div class="feature-icon">🎵</div><h3>Binaural panning</h3><p>A 528Hz tone pans in perfect sync with the ball — left ear to right ear, sub-mixed under your existing audio.</p></div>
+    <div class="feature"><div class="feature-icon">🌧️</div><h3>Ambient soundscapes</h3><p>Rain, brown noise, lo-fi hum, or our custom 80 BPM bilateral ambient track layered beneath the binaural tone.</p></div>
+    <div class="feature"><div class="feature-icon">💓</div><h3>Heart rate response</h3><p>Connect a Bluetooth heart rate monitor and the app automatically responds to stress spikes in real time.</p></div>
+    <div class="feature"><div class="feature-icon">🫁</div><h3>Breathing guide</h3><p>At elevated stress the orb shifts into a breathing pulse — stays red and expanded until your heart rate fully stabilizes.</p></div>
+    <div class="feature"><div class="feature-icon">🎨</div><h3>Customizable appearance</h3><p>Adjust opacity, size, speed, and color. Blue or white. From barely visible to unmissable.</p></div>
+    <div class="feature"><div class="feature-icon">⚡</div><h3>Always on, all spaces</h3><p>Runs from the menu bar. Follows you across every desktop, fullscreen app, and Mission Control space.</p></div>
+    <div class="feature"><div class="feature-icon">🔋</div><h3>Battery optimized</h3><p>Runs at 30fps with hardware acceleration disabled. Designed to run all day without draining your battery.</p></div>
+  </div>
+</section>
+
+<!-- HEART RATE -->
+<div class="hr-section" id="heartrate">
+  <div>
+    <div class="section-eyebrow">Heart Rate Integration</div>
+    <h2 class="section-title">Your body tells it<br>when to <em>intervene.</em></h2>
+    <p class="section-body" style="margin-bottom:20px">Connect a compatible Bluetooth heart rate monitor and Bilateral Focus becomes adaptive. When your BPM spikes above your personal baseline, the app responds — slowing the ball, shifting to amber and red, and guiding you through a breathing cycle until you're calm.</p>
+    <p class="section-body" style="font-size:13px;color:var(--text-muted)">Compatible with Polar H10, Polar Verity Sense, and any standard Bluetooth LE heart rate monitor.<br><br>Apple Watch integration — coming soon.</p>
+  </div>
+  <div class="hr-visual">
+    <div class="hr-header">
+      <div class="hr-bpm">94<span>BPM</span></div>
+      <div class="hr-status"><div class="hr-status-dot"></div>ELEVATED</div>
+    </div>
+    <div class="bar-label"><span>Stress Level</span><span>ELEVATED</span></div>
+    <div class="hr-bar-bg"><div class="hr-bar-fill"></div></div>
+    <div class="bar-label bar-label2" style="margin-top:20px"><span>Breathing Guide</span><span>BREATHE IN →</span></div>
+    <div class="hr-bar-bg"><div class="hr-bar-fill2"></div></div>
+    <div class="coming-soon">🍎 &nbsp; Apple Watch support — coming soon</div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials">
+  <div class="testimonials-inner">
+    <div class="testimonials-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">Early Users</div>
+      <h2 class="section-title" style="text-align:center">Built for the ones<br>who <em>can't slow down.</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <p class="testimonial-text">"I trade during market open and my heart rate used to go insane. This thing just sits there and somehow I make better decisions. I don't fully understand it but I'm not questioning it."</p>
+        <div class="testimonial-author"><div class="t-avatar">M</div><div class="t-info"><strong>Marcus T.</strong><span>Day Trader</span></div></div>
+      </div>
+      <div class="testimonial reveal">
+        <p class="testimonial-text">"I'm a skeptic by nature. I thought this was pseudoscience. Then I actually looked up the EMDR research and spent three hours in a rabbit hole. Now I use it every single day for deep work."</p>
+        <div class="testimonial-author"><div class="t-avatar">S</div><div class="t-info"><strong>Sarah K.</strong><span>Senior Software Engineer</span></div></div>
+      </div>
+      <div class="testimonial reveal">
+        <p class="testimonial-text">"I write under deadline pressure constantly. The breathing guide has genuinely changed how I handle the anxiety of a blank page. It's the only focus tool I've kept using past week one."</p>
+        <div class="testimonial-author"><div class="t-avatar">J</div><div class="t-info"><strong>Jamie R.</strong><span>Freelance Writer</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section id="pricing" style="text-align:center">
+  <div class="section-eyebrow" style="justify-content:center">Pricing</div>
+  <h2 class="section-title">Simple, honest pricing.</h2>
+  <p class="section-body" style="margin:0 auto;text-align:center">Try it free. Unlock everything with a one-time purchase — no subscription, no recurring charges, ever.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal">
+      <div class="pricing-tier">Free</div>
+      <div class="pricing-price"><sup>$</sup>0</div>
+      <div class="pricing-period">forever free</div>
+      <ul class="pricing-features">
+        <li>Bilateral overlay ball</li>
+        <li>Basic speed & opacity</li>
+        <li>Mouse avoidance</li>
+        <li>All workspaces support</li>
+        <li class="locked">Binaural audio</li>
+        <li class="locked">Ambient soundscapes</li>
+        <li class="locked">Heart rate response</li>
+        <li class="locked">Breathing guide</li>
+        <li class="locked">Color themes</li>
+      </ul>
+      <a href="#download" class="pricing-btn free">Download Free</a>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="pricing-badge">Most Popular</div>
+      <div class="pricing-tier">Pro</div>
+      <div class="pricing-price"><sup>$</sup>24<span style="font-size:28px">.99</span></div>
+      <div class="pricing-period">one-time purchase</div>
+      <ul class="pricing-features">
+        <li>Everything in Free</li>
+        <li>Binaural 528Hz panning</li>
+        <li>All ambient soundscapes</li>
+        <li>Heart rate response</li>
+        <li>Guided breathing mode</li>
+        <li>Color themes</li>
+        <li>Full size & speed control</li>
+        <li>Priority support</li>
+        <li>All future updates</li>
+      </ul>
+      <a href="#download" class="pricing-btn pro">Get Pro — $24.99</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="download">
+  <div class="cta-glow"></div>
+  <div class="section-eyebrow" style="justify-content:center;margin-bottom:28px">Download</div>
+  <h2 class="section-title reveal" style="max-width:700px;margin:0 auto 20px">Your most focused day<br>starts <em>right now.</em></h2>
+  <p class="section-body reveal" style="max-width:480px;margin:0 auto 48px;text-align:center">Available for macOS 12 Monterey or later. Apple Silicon and Intel both supported.</p>
+  <div class="hero-actions" style="justify-content:center;opacity:1;animation:none">
+    <a href="#" class="btn-primary">⬇ Download for Mac</a>
+    <a href="#science" class="btn-secondary">Read the Science</a>
+  </div>
+  <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.1em;margin-top:20px;text-transform:uppercase">Free 7-Day Trial — No Credit Card Required</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><div class="footer-dot"></div><span class="footer-name">Bilateral Focus</span></div>
+  <div class="footer-copy">© 2025 Bilateral Focus. All rights reserved.</div>
+  <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80)
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+
+  document.querySelectorAll('.reveal, .step').forEach(el => observer.observe(el))
+
+  document.addEventListener('mousemove', (e) => {
+    const glow = document.querySelector('.hero-glow')
+    if (!glow) return
+    const x = (e.clientX / window.innerWidth - 0.5) * 20
+    const y = (e.clientY / window.innerHeight - 0.5) * 20
+    glow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`
+  })
+</script>
+</body>
+</html>
