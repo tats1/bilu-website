@@ -424,36 +424,35 @@
           transform:translate(-50%,-50%);
           background:radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%);
           box-shadow:0 0 10px 4px rgba(100,180,255,0.9),0 0 24px 8px rgba(80,150,255,0.6),0 0 44px 13px rgba(60,120,255,0.3);
-          transition:width 2s ease,height 2s ease,box-shadow 2s ease,background 2s ease;
         "></div>
       </div>
 
       <!-- Phase label -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
         <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">State</div>
-        <div id="demoPhaseLabel" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);transition:color 1.5s ease">Calm</div>
+        <div id="demoPhaseLabel" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;transition:color 1.5s ease">Calm</div>
       </div>
 
       <!-- Breathing bar -->
       <div style="margin-bottom:10px;">
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
           <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)">Breathing Guide</span>
-          <span id="demoBreathLabel" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--cyan);transition:color 0.5s;opacity:0">BREATHE IN</span>
+          <span id="demoBreathLabel" style="font-family:'DM Mono',monospace;font-size:10px;transition:color 0.5s;opacity:0">BREATHE IN</span>
         </div>
         <div style="height:5px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;">
-          <div id="demoBreathBar" style="height:100%;width:0%;border-radius:3px;background:linear-gradient(90deg,var(--cyan),var(--amber));transition:background 1.5s ease;"></div>
+          <div id="demoBreathBar" style="height:100%;width:0%;border-radius:3px;"></div>
         </div>
       </div>
 
       <!-- BPM display -->
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div style="display:flex;align-items:baseline;gap:6px;">
-          <span id="demoBPM" style="font-family:'DM Mono',monospace;font-size:28px;color:var(--cyan);line-height:1;transition:color 1.5s ease">68</span>
+          <span id="demoBPM" style="font-family:'DM Mono',monospace;font-size:28px;line-height:1;transition:color 1.5s ease">68</span>
           <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">BPM</span>
         </div>
-        <div id="demoStatusPill" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;background:rgba(125,232,200,0.06);border:0.5px solid rgba(125,232,200,0.15);transition:all 1.5s ease;">
-          <div id="demoStatusDot" style="width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:blink 2s ease-in-out infinite;transition:background 1.5s ease;"></div>
-          <span id="demoStatusText" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--cyan);transition:color 1.5s ease">CALM</span>
+        <div id="demoStatusPill" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;transition:all 1.5s ease;">
+          <div id="demoStatusDot" style="width:5px;height:5px;border-radius:50%;animation:blink 2s ease-in-out infinite;transition:background 1.5s ease;"></div>
+          <span id="demoStatusText" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;transition:color 1.5s ease">CALM</span>
         </div>
       </div>
     </div>
@@ -476,218 +475,183 @@
 
 <style>
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  #demoCalmBall { transition: width 0.4s ease, height 0.4s ease; }
 </style>
 
 <script>
-(function() {
-  // Demo animation state machine
-  // Phases: calm (5s) → rising (4s) → stressed (8s) → breathing (12s) → recovering (6s) → calm
-  const ball = document.getElementById('demoCalmBall')
-  const bpmEl = document.getElementById('demoBPM')
-  const phaseLabel = document.getElementById('demoPhaseLabel')
-  const breathBar = document.getElementById('demoBreathBar')
+(function () {
+  const ball        = document.getElementById('demoCalmBall')
+  const bpmEl       = document.getElementById('demoBPM')
+  const phaseLabel  = document.getElementById('demoPhaseLabel')
+  const breathBar   = document.getElementById('demoBreathBar')
   const breathLabel = document.getElementById('demoBreathLabel')
-  const statusDot = document.getElementById('demoStatusDot')
-  const statusText = document.getElementById('demoStatusText')
-  const statusPill = document.getElementById('demoStatusPill')
+  const statusDot   = document.getElementById('demoStatusDot')
+  const statusText  = document.getElementById('demoStatusText')
+  const statusPill  = document.getElementById('demoStatusPill')
 
   if (!ball) return
 
-  let ballPos = 8 // percent
-  let ballDir = 1
-  let breathPulse = 0
-  let breathIn = true
-  let phase = 'calm'
-  let phaseTimer = 0
-  let bpm = 68
-  let targetBpm = 68
-  let animFrame
+  /* ── colour stops ───────────────────────────────── */
+  const BLUE  = { r: 80,  g: 160, b: 255 }
+  const AMBER = { r: 240, g: 160, b: 40  }
+
+  /* ── state ──────────────────────────────────────── */
+  let ballPos    = 8
+  let ballDir    = 1
+  let breathPct  = 0
+  let breathIn   = true
+  let phase      = 'calm'
+  let phaseStart = 0
+  let bpm        = 68
+  let targetBpm  = 68
+  let lastTs     = 0
 
   const phases = {
-    calm:       { duration: 5000,  next: 'rising' },
-    rising:     { duration: 5000,  next: 'stressed' },
-    stressed:   { duration: 8000,  next: 'breathing' },
-    breathing:  { duration: 12000, next: 'recovering' },
-    recovering: { duration: 6000,  next: 'calm' }
+    calm:       { dur: 4000, next: 'rising'     },
+    rising:     { dur: 4000, next: 'stressed'   },
+    stressed:   { dur: 5000, next: 'recovering' },
+    recovering: { dur: 5000, next: 'calm'       }
   }
 
-  function setPhase(p) {
-    phase = p
-    phaseTimer = Date.now()
+  /* ── helpers ────────────────────────────────────── */
+  function lerp(a, b, t)    { return a + (b - a) * t }
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)) }
 
+  /* ── apply colour (t=0 blue, t=1 amber) ─────────── */
+  function applyColor(t) {
+    t = clamp(t, 0, 1)
+    const r   = Math.round(lerp(BLUE.r, AMBER.r, t))
+    const g   = Math.round(lerp(BLUE.g, AMBER.g, t))
+    const b   = Math.round(lerp(BLUE.b, AMBER.b, t))
+    const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')
+
+    /* ball size */
+    const size = Math.round(lerp(40, 52, t))
+    ball.style.width  = size + 'px'
+    ball.style.height = size + 'px'
+
+    /* ball gradient */
+    ball.style.background = `radial-gradient(circle at center,
+      rgba(0,0,0,0.5) 0%,
+      rgba(${Math.round(r*0.2)},${Math.round(g*0.2)},${Math.round(b*0.1)},0.3) 30%,
+      rgba(${r},${g},${b},0.65) 58%,
+      rgba(${Math.min(255,r+30)},${Math.min(255,g+30)},${Math.min(255,b+30)},0.9) 74%,
+      rgba(${Math.min(255,r+60)},${Math.min(255,g+50)},${Math.min(255,b+60)},1.0) 87%,
+      rgba(255,255,255,0.5) 100%)`
+
+    /* glow */
+    ball.style.boxShadow = `
+      0 0 10px 4px rgba(${r},${g},${b},0.9),
+      0 0 24px 8px rgba(${r},${g},${b},0.6),
+      0 0 44px 13px rgba(${r},${g},${b},0.3)`
+
+    /* UI elements */
+    bpmEl.style.color            = hex
+    phaseLabel.style.color       = hex
+    statusText.style.color       = hex
+    statusDot.style.background   = hex
+    breathLabel.style.color      = hex
+    statusPill.style.background  = `rgba(${r},${g},${b},0.07)`
+    statusPill.style.border      = `0.5px solid rgba(${r},${g},${b},0.18)`
+    breathBar.style.background   = `linear-gradient(90deg,
+      rgba(${BLUE.r},${BLUE.g},${BLUE.b},1),
+      rgba(${r},${g},${b},1))`
+  }
+
+  /* ── phase transitions ──────────────────────────── */
+  function setPhase(p, ts) {
+    phase      = p
+    phaseStart = ts
     if (p === 'calm') {
       targetBpm = 66 + Math.random() * 6
-      setCalm()
+      phaseLabel.textContent    = 'Calm'
+      statusText.textContent    = 'CALM'
+      breathLabel.style.opacity = '0'
     } else if (p === 'rising') {
-      targetBpm = 95 + Math.random() * 10
-      setElevated()
+      targetBpm = 95 + Math.random() * 8
+      phaseLabel.textContent    = 'Stress Rising'
+      statusText.textContent    = 'ELEVATED'
+      breathLabel.style.opacity = '0'
     } else if (p === 'stressed') {
       targetBpm = 108 + Math.random() * 8
-      setStressed()
-    } else if (p === 'breathing') {
-      setBreathing()
+      phaseLabel.textContent    = 'High Stress'
+      statusText.textContent    = 'HIGH STRESS'
+      breathLabel.style.opacity = '1'
+      breathLabel.textContent   = 'BREATHE IN'
     } else if (p === 'recovering') {
-      targetBpm = 72 + Math.random() * 6
-      setRecovering()
+      targetBpm = 70 + Math.random() * 6
+      phaseLabel.textContent    = 'Recovering'
+      statusText.textContent    = 'CALMING'
+      breathLabel.style.opacity = '1'
     }
   }
 
-  function setCalm() {
-    phaseLabel.textContent = 'Calm'
-    phaseLabel.style.color = 'var(--cyan)'
-    statusText.textContent = 'CALM'
-    statusText.style.color = 'var(--cyan)'
-    statusDot.style.background = 'var(--cyan)'
-    statusPill.style.background = 'rgba(125,232,200,0.06)'
-    statusPill.style.borderColor = 'rgba(125,232,200,0.15)'
-    breathLabel.style.opacity = '0'
-    breathBar.style.width = '0%'
-    breathBar.style.background = 'linear-gradient(90deg,var(--cyan),#4a9eff)'
-    ball.style.width = '40px'
-    ball.style.height = '40px'
-    ball.style.background = 'radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%)'
-    ball.style.boxShadow = '0 0 10px 4px rgba(100,180,255,0.9),0 0 24px 8px rgba(80,150,255,0.6),0 0 44px 13px rgba(60,120,255,0.3)'
-  }
-
-  function setElevated() {
-    phaseLabel.textContent = 'Stress Rising'
-    phaseLabel.style.color = '#f0c040'
-    statusText.textContent = 'ELEVATED'
-    statusText.style.color = '#f0c040'
-    statusDot.style.background = '#f0c040'
-    statusPill.style.background = 'rgba(240,192,64,0.08)'
-    statusPill.style.borderColor = 'rgba(240,192,64,0.2)'
-    breathLabel.style.opacity = '0'
-    ball.style.width = '46px'
-    ball.style.height = '46px'
-    ball.style.background = 'radial-gradient(circle at center,rgba(10,5,0,0.5) 0%,rgba(100,60,0,0.3) 30%,rgba(200,140,40,0.6) 58%,rgba(240,192,64,0.9) 74%,rgba(255,220,100,1.0) 87%,rgba(255,240,180,0.6) 100%)'
-    ball.style.boxShadow = '0 0 10px 4px rgba(240,192,64,0.85),0 0 24px 8px rgba(220,160,40,0.6),0 0 44px 13px rgba(200,130,20,0.3)'
-  }
-
-  function setStressed() {
-    phaseLabel.textContent = 'High Stress'
-    phaseLabel.style.color = '#ff6b6b'
-    statusText.textContent = 'HIGH STRESS'
-    statusText.style.color = '#ff6b6b'
-    statusDot.style.background = '#ff6b6b'
-    statusPill.style.background = 'rgba(255,107,107,0.08)'
-    statusPill.style.borderColor = 'rgba(255,107,107,0.2)'
-    breathLabel.style.opacity = '1'
-    breathLabel.style.color = '#f0c040'
-    breathLabel.textContent = 'BREATHE IN'
-    ball.style.width = '52px'
-    ball.style.height = '52px'
-    ball.style.background = 'radial-gradient(circle at center,rgba(20,0,0,0.5) 0%,rgba(120,20,20,0.3) 30%,rgba(220,60,60,0.6) 58%,rgba(255,100,80,0.9) 74%,rgba(255,140,100,1.0) 87%,rgba(255,200,180,0.6) 100%)'
-    ball.style.boxShadow = '0 0 10px 4px rgba(255,100,80,0.9),0 0 24px 8px rgba(220,60,60,0.65),0 0 44px 13px rgba(180,30,30,0.35)'
-  }
-
-  function setBreathing() {
-    phaseLabel.textContent = 'Breathing Guide'
-    phaseLabel.style.color = '#7de8c8'
-    statusText.textContent = 'CALMING'
-    statusText.style.color = '#7de8c8'
-    statusDot.style.background = '#7de8c8'
-    statusPill.style.background = 'rgba(125,232,200,0.06)'
-    statusPill.style.borderColor = 'rgba(125,232,200,0.2)'
-    breathLabel.style.opacity = '1'
-  }
-
-  function setRecovering() {
-    phaseLabel.textContent = 'Recovering'
-    phaseLabel.style.color = 'var(--cyan)'
-    statusText.textContent = 'CALM'
-    statusText.style.color = 'var(--cyan)'
-    statusDot.style.background = 'var(--cyan)'
-    statusPill.style.background = 'rgba(125,232,200,0.06)'
-    statusPill.style.borderColor = 'rgba(125,232,200,0.15)'
-    breathLabel.style.opacity = '0'
-    ball.style.width = '40px'
-    ball.style.height = '40px'
-    ball.style.background = 'radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%)'
-    ball.style.boxShadow = '0 0 10px 4px rgba(100,180,255,0.9),0 0 24px 8px rgba(80,150,255,0.6),0 0 44px 13px rgba(60,120,255,0.3)'
-  }
-
-  let lastTime = 0
+  /* ── main loop ──────────────────────────────────── */
   function animate(ts) {
-    const dt = Math.min(ts - lastTime, 50)
-    lastTime = ts
+    const dt      = Math.min(ts - lastTs, 50)
+    lastTs        = ts
+    const elapsed = ts - phaseStart
+    const dur     = phases[phase].dur
 
-    // Advance phase
-    const elapsed = ts - phaseTimer
-    const phaseDur = phases[phase] ? phases[phase].duration : 5000
-    if (elapsed > phaseDur) {
-      setPhase(phases[phase].next)
+    /* advance phase */
+    if (elapsed > dur) {
+      setPhase(phases[phase].next, ts)
     }
 
-    // Bounce ball — slower during stress
-    const speedMod = (phase === 'stressed' || phase === 'breathing') ? 0.3 : 1
-    ballPos += 0.04 * ballDir * speedMod * (dt / 16)
+    const progress = clamp(elapsed / dur, 0, 1)
+
+    /* colour coefficient per phase */
+    let colorT = 0
+    if      (phase === 'calm')       colorT = 0
+    else if (phase === 'rising')     colorT = progress       /* 0 → 1 */
+    else if (phase === 'stressed')   colorT = 1
+    else if (phase === 'recovering') colorT = 1 - progress   /* 1 → 0 */
+
+    applyColor(colorT)
+
+    /* ball movement — slows under stress */
+    const speed = lerp(0.055, 0.018, colorT)
+    ballPos += speed * ballDir * (dt / 16)
     if (ballPos >= 92) { ballPos = 92; ballDir = -1 }
-    if (ballPos <= 8)  { ballPos = 8;  ballDir = 1  }
+    if (ballPos <=  8) { ballPos =  8; ballDir =  1 }
     ball.style.left = ballPos + '%'
 
-    // BPM drift toward target
-    bpm += (targetBpm - bpm) * 0.01
+    /* BPM drift */
+    bpm += (targetBpm - bpm) * 0.012
     bpmEl.textContent = Math.round(bpm)
 
-    // BPM color
-    if (bpm > 95) {
-      bpmEl.style.color = '#ff6b6b'
-    } else if (bpm > 80) {
-      bpmEl.style.color = '#f0c040'
-    } else {
-      bpmEl.style.color = 'var(--cyan)'
-    }
-
-    // Breathing animation during stressed + breathing phases
-    if (phase === 'stressed' || phase === 'breathing') {
-      const inSpeed = 0.004
-      const outSpeed = 0.003
-
+    /* breathing bar — active when stressed or recovering */
+    if (phase === 'stressed' || phase === 'recovering') {
       if (breathIn) {
-        breathPulse += inSpeed * (dt / 16)
-        if (breathPulse >= 1) {
-          breathPulse = 1
-          breathIn = false
+        breathPct += 0.004 * (dt / 16)
+        if (breathPct >= 1) {
+          breathPct = 1; breathIn = false
           breathLabel.textContent = 'BREATHE OUT'
-          breathLabel.style.color = 'var(--cyan)'
         }
       } else {
-        breathPulse -= outSpeed * (dt / 16)
-        if (breathPulse <= 0) {
-          breathPulse = 0
-          breathIn = true
+        breathPct -= 0.003 * (dt / 16)
+        if (breathPct <= 0) {
+          breathPct = 0; breathIn = true
           breathLabel.textContent = 'BREATHE IN'
-          breathLabel.style.color = '#f0c040'
         }
       }
-
-      breathBar.style.width = (breathPulse * 100) + '%'
-
-      // Ball breathes with the bar during breathing phase
-      if (phase === 'breathing') {
-        const breathSize = 44 + breathPulse * 14
-        ball.style.width = breathSize + 'px'
-        ball.style.height = breathSize + 'px'
-
-        // Color shifts from red back toward blue as breathing progresses
-        const progress = Math.min(1, elapsed / phaseDur)
-        const r = Math.round(220 - progress * 140)
-        const g = Math.round(60  + progress * 100)
-        const b2 = Math.round(60  + progress * 195)
-        ball.style.boxShadow = `0 0 10px 4px rgba(${r},${g},${b2},0.9),0 0 24px 8px rgba(${r},${g},${b2},0.6),0 0 44px 13px rgba(${r},${g},${b2},0.3)`
+      if (phase === 'recovering') {
+        const s = Math.round(lerp(44, 52, breathPct) * (1 - progress * 0.25))
+        ball.style.width  = s + 'px'
+        ball.style.height = s + 'px'
       }
     } else {
-      breathPulse *= 0.95
-      breathBar.style.width = (breathPulse * 100) + '%'
+      breathPct *= 0.92
     }
+    breathBar.style.width = (breathPct * 100) + '%'
 
-    animFrame = requestAnimationFrame(animate)
+    requestAnimationFrame(animate)
   }
 
-  // Start
-  setPhase('calm')
-  animFrame = requestAnimationFrame((ts) => { lastTime = ts; animate(ts) })
+  /* ── kick off ───────────────────────────────────── */
+  setPhase('calm', 0)
+  applyColor(0)
+  requestAnimationFrame(ts => { lastTs = ts; animate(ts) })
 })()
 </script>
 
