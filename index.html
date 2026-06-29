@@ -19,8 +19,6 @@
     html{scroll-behavior:smooth}
     body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.35}
-
-    /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:linear-gradient(to bottom,rgba(8,10,15,0.95),transparent);backdrop-filter:blur(12px)}
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow);animation:navpulse 2.5s ease-in-out infinite}
@@ -31,8 +29,6 @@
     .nav-links a:hover{color:var(--text)}
     .nav-cta{padding:9px 22px;border-radius:100px;border:0.5px solid var(--cyan);background:transparent;color:var(--cyan)!important;font-family:'Syne',sans-serif;font-size:12px!important;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s!important;text-decoration:none}
     .nav-cta:hover{background:var(--cyan-dim)!important;box-shadow:0 0 20px var(--cyan-dim)}
-
-    /* HERO */
     .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 48px 100px;text-align:center}
     .hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(74,158,255,0.06) 0%,rgba(125,232,200,0.04) 40%,transparent 70%);pointer-events:none;animation:herobreath 6s ease-in-out infinite}
     @keyframes herobreath{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.1);opacity:0.7}}
@@ -43,35 +39,26 @@
     .hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);font-weight:300;font-style:italic;color:var(--text-dim);margin-bottom:48px;max-width:560px;line-height:1.5;opacity:0;animation:fadeup 0.8s ease 0.6s forwards}
     .hero-actions{display:flex;align-items:center;gap:16px;margin-bottom:80px;opacity:0;animation:fadeup 0.8s ease 0.8s forwards}
     @keyframes fadeup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
     .btn-primary{padding:14px 32px;border-radius:100px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s;box-shadow:0 0 30px rgba(125,232,200,0.3)}
     .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(125,232,200,0.5)}
     .btn-secondary{padding:14px 32px;border-radius:100px;background:transparent;color:var(--text-dim);font-family:'Syne',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:0.5px solid var(--border);cursor:pointer;text-decoration:none;transition:all 0.2s}
     .btn-secondary:hover{border-color:rgba(125,232,200,0.3);color:var(--text)}
-
-    /* DEMO BALL */
     .hero-demo{position:relative;width:100%;max-width:900px;height:120px;opacity:0;animation:fadeup 0.8s ease 1s forwards}
     .demo-track{position:absolute;top:50%;left:0;right:0;height:0.5px;background:linear-gradient(90deg,transparent,var(--border),var(--cyan-dim),var(--border),transparent);transform:translateY(-50%)}
     .demo-ball{position:absolute;top:50%;width:44px;height:44px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%);box-shadow:0 0 10px 4px rgba(100,180,255,0.99),0 0 24px 8px rgba(80,150,255,0.75),0 0 48px 14px rgba(60,120,255,0.45),0 0 80px 20px rgba(40,90,220,0.22);animation:demobounce 3s ease-in-out infinite alternate}
     @keyframes demobounce{0%{left:4%}100%{left:96%}}
     .demo-label{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
-
-    /* STATS */
     .stats-bar{display:flex;align-items:center;justify-content:center;padding:32px 48px;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);background:var(--bg2)}
     .stat{flex:1;max-width:240px;text-align:center;padding:0 32px;border-right:0.5px solid var(--border)}
     .stat:last-child{border-right:none}
     .stat-number{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--cyan);line-height:1;margin-bottom:8px}
     .stat-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);line-height:1.5}
-
-    /* SHARED SECTION */
     section{padding:120px 48px;max-width:1200px;margin:0 auto}
     .section-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:12px}
     .section-eyebrow::before{content:'';display:block;width:24px;height:0.5px;background:var(--cyan)}
     .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,58px);font-weight:300;line-height:1.1;color:var(--text);margin-bottom:20px}
     .section-title em{font-style:italic;color:var(--cyan)}
     .section-body{font-size:15px;line-height:1.8;color:var(--text-dim);max-width:580px}
-
-    /* HOW IT WORKS */
     .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:80px}
     .how-steps{display:flex;flex-direction:column;gap:40px}
     .step{display:flex;gap:24px;align-items:flex-start;opacity:0;transform:translateX(-20px);transition:all 0.6s ease}
@@ -87,21 +74,17 @@
     .how-visual-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
     .how-cursor{position:absolute;width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);top:58%;animation:cursor 5s ease-in-out infinite}
     @keyframes cursor{0%{left:38%;opacity:0.4}40%{left:52%;opacity:0.7}70%{left:32%;opacity:0.4}100%{left:38%;opacity:0.4}}
-
-    /* SCIENCE */
-    .science-section{background:var(--bg2);padding:120px 0;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
-    .science-inner{max-width:1200px;margin:0 auto;padding:0 48px}
-    .science-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px}
-    .science-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .science-card{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:32px 28px;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s}
-    .science-card:hover{border-color:rgba(125,232,200,0.2);transform:translateY(-4px)}
-    .science-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)}
-    .science-icon{font-size:28px;margin-bottom:20px;display:block}
-    .science-card h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.4}
-    .science-card p{font-size:13px;line-height:1.7;color:var(--text-dim)}
-    .card-cite{margin-top:16px;padding-top:16px;border-top:0.5px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.04em;line-height:1.5}
-
-    /* FEATURES */
+    .testimonials{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:100px 48px}
+    .testimonials-inner{max-width:1200px;margin:0 auto}
+    .testimonials-header{text-align:center;margin-bottom:60px}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .testimonial{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:32px 28px;transition:border-color 0.3s}
+    .testimonial:hover{border-color:rgba(125,232,200,0.15)}
+    .testimonial-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;font-weight:300;line-height:1.6;color:var(--text);margin-bottom:24px}
+    .testimonial-author{display:flex;align-items:center;gap:12px}
+    .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--cyan-dim);border:0.5px solid rgba(125,232,200,0.2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--cyan)}
+    .t-info strong{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+    .t-info span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--text-muted);text-transform:uppercase}
     .features-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:80px;border:0.5px solid var(--border);border-radius:16px;overflow:hidden}
     .feature{padding:40px 32px;background:var(--surface);border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border);transition:background 0.3s}
     .feature:hover{background:#161920}
@@ -110,9 +93,7 @@
     .feature-icon{width:40px;height:40px;border-radius:10px;background:var(--cyan-dim);border:0.5px solid rgba(125,232,200,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:20px}
     .feature h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px}
     .feature p{font-size:13px;line-height:1.7;color:var(--text-dim)}
-
-    /* HR */
-    .hr-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:120px 48px;max-width:1200px;margin:0 auto}
+    .hr-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;padding:120px 48px;max-width:1200px;margin:0 auto}
     .hr-visual{background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:36px;position:relative;overflow:hidden}
     .hr-visual::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)}
     .hr-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px}
@@ -129,23 +110,7 @@
     .bar-label span:last-child{color:var(--amber)}
     .hr-bar-fill2{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--blue));animation:breathb 8s ease-in-out infinite}
     @keyframes breathb{0%{width:0%}45%{width:100%}50%{width:100%}95%{width:0%}100%{width:0%}}
-    .bar-label2 span:last-child{color:var(--cyan);animation:blabel 8s ease-in-out infinite}
     .coming-soon{margin-top:24px;padding:12px 16px;background:rgba(74,158,255,0.06);border:0.5px solid rgba(74,158,255,0.15);border-radius:8px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);text-align:center}
-
-    /* TESTIMONIALS */
-    .testimonials{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:100px 48px}
-    .testimonials-inner{max-width:1200px;margin:0 auto}
-    .testimonials-header{text-align:center;margin-bottom:60px}
-    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .testimonial{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:32px 28px;transition:border-color 0.3s}
-    .testimonial:hover{border-color:rgba(125,232,200,0.15)}
-    .testimonial-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;font-weight:300;line-height:1.6;color:var(--text);margin-bottom:24px}
-    .testimonial-author{display:flex;align-items:center;gap:12px}
-    .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--cyan-dim);border:0.5px solid rgba(125,232,200,0.2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--cyan)}
-    .t-info strong{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
-    .t-info span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--text-muted);text-transform:uppercase}
-
-    /* PRICING */
     .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;max-width:800px;margin-left:auto;margin-right:auto}
     .pricing-card{background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:40px 36px;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s}
     .pricing-card:hover{transform:translateY(-4px)}
@@ -167,12 +132,8 @@
     .pricing-btn.free:hover{border-color:rgba(125,232,200,0.3);color:var(--text)}
     .pricing-btn.pro{background:var(--cyan);color:var(--bg);border:none;box-shadow:0 0 30px rgba(125,232,200,0.25)}
     .pricing-btn.pro:hover{box-shadow:0 0 50px rgba(125,232,200,0.45);transform:translateY(-1px)}
-
-    /* CTA */
     .cta-section{text-align:center;padding:160px 48px;position:relative;overflow:hidden}
     .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(125,232,200,0.04) 0%,transparent 70%);pointer-events:none}
-
-    /* FOOTER */
     footer{border-top:0.5px solid var(--border);padding:60px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
     .footer-logo{display:flex;align-items:center;gap:10px}
     .footer-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);opacity:0.5}
@@ -181,12 +142,11 @@
     .footer-links{display:flex;gap:28px}
     .footer-links a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
     .footer-links a:hover{color:var(--text)}
-
-    /* REVEAL */
     .reveal,.step{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
     .reveal.visible,.step.visible{opacity:1;transform:translateY(0)}
     .step{transform:translateX(-20px)}
     .step.visible{transform:translateX(0)}
+    @keyframes blink2{0%,100%{opacity:1}50%{opacity:0.3}}
   </style>
 </head>
 <body>
@@ -198,8 +158,8 @@
   </a>
   <ul class="nav-links">
     <li><a href="#how">How It Works</a></li>
-    <li><a href="#science">Science</a></li>
-    <li><a href="#features">Features</a></li>
+    <li><a href="science.html">Science</a></li>
+    <li><a href="#calm">Calm Mode</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#download" class="nav-cta">Download</a></li>
   </ul>
@@ -213,7 +173,7 @@
   <p class="hero-subtitle">A subtle overlay that uses bilateral stimulation to reduce anxiety, sharpen focus, and regulate stress — without ever breaking your flow.</p>
   <div class="hero-actions">
     <a href="#download" class="btn-primary">⬇ Download for Mac</a>
-    <a href="#science" class="btn-secondary">Read the Science</a>
+    <a href="science.html" class="btn-secondary">Read the Science</a>
   </div>
   <div class="hero-demo">
     <div class="demo-track"></div>
@@ -230,7 +190,7 @@
   <div class="stat"><div class="stat-number">0</div><div class="stat-label">Interruptions —<br>works while you work</div></div>
 </div>
 
-<!-- TESTIMONIALS — moved here, right after stats bar -->
+<!-- TESTIMONIALS -->
 <div class="testimonials">
   <div class="testimonials-inner">
     <div class="testimonials-header reveal">
@@ -239,15 +199,15 @@
     </div>
     <div class="testimonials-grid">
       <div class="testimonial reveal">
-        <p class="testimonial-text">"I trade during market open and my heart rate used to go insane, the stakes are high and the stress hits hard. With Bilu running in the background, I feel genuinely calmer under pressure. I'm not reacting, I'm thinking. My decisions are sharper because my nervous system isn't in panic mode anymore."</p>
+        <p class="testimonial-text">"I trade during market open and my heart rate used to go insane. With Bilu running in the background, I feel genuinely calmer under pressure. My decisions are sharper because my nervous system isn't in panic mode anymore."</p>
         <div class="testimonial-author"><div class="t-avatar">M</div><div class="t-info"><strong>Marcus T.</strong><span>Day Trader</span></div></div>
       </div>
       <div class="testimonial reveal">
-        <p class="testimonial-text">"I use it every day for deep work. My stress is noticeably lower and my focus is sharper. I used to get derailed by every notification and stray thought. Bilu keeps the ADHD in check and the distractions at bay."</p>
+        <p class="testimonial-text">"I use it every day for deep work. My stress is noticeably lower and my focus is sharper. Bilu keeps the ADHD in check and the distractions at bay."</p>
         <div class="testimonial-author"><div class="t-avatar">S</div><div class="t-info"><strong>Sarah K.</strong><span>Senior Software Engineer</span></div></div>
       </div>
       <div class="testimonial reveal">
-        <p class="testimonial-text">"I write under deadline pressure constantly. The breathing guide has genuinely changed how I handle the anxiety of a blank page. It's the only focus tool I've kept using past week one."</p>
+        <p class="testimonial-text">"The breathing guide has genuinely changed how I handle deadline anxiety. It's the only focus tool I've kept using past week one."</p>
         <div class="testimonial-author"><div class="t-avatar">J</div><div class="t-info"><strong>Jamie R.</strong><span>Freelance Writer</span></div></div>
       </div>
     </div>
@@ -257,8 +217,8 @@
 <!-- HOW IT WORKS -->
 <section id="how">
   <div class="section-eyebrow">How It Works</div>
-  <h2 class="section-title">Engineered to sustain<br>your <em> relentless drive.</em></h2>
-  <p class="section-body">Most focus tools ask you to pause. Bilu works while you work a barely-visible overlay running silently in the background of your screen, doing the heavy lifting your nervous system never gets a break from.</p>
+  <h2 class="section-title">Engineered to sustain<br>your <em>relentless drive.</em></h2>
+  <p class="section-body">Most focus tools ask you to pause. Bilu works while you work — a barely-visible overlay running silently in the background, doing the heavy lifting your nervous system never gets a break from.</p>
   <div class="how-grid">
     <div class="how-steps">
       <div class="step">
@@ -287,52 +247,179 @@
   </div>
 </section>
 
-<!-- SCIENCE -->
-<div class="science-section" id="science">
-  <div class="science-inner">
-    <div class="science-header reveal">
+<!-- BURNOUT -->
+<div style="background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:120px 48px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
       <div>
-        <div class="section-eyebrow">The Science</div>
-        <h2 class="section-title">Not wellness.<br><em>Neuroscience.</em></h2>
+        <div class="section-eyebrow">Burnout Prevention</div>
+        <h2 class="section-title">Your brain<br>needs a <em>cooling<br>system.</em></h2>
+        <p class="section-body" style="margin-bottom:24px">Burnout isn't caused by working hard. It's caused by your nervous system never getting a chance to regulate — accumulating stress day after day until the system breaks down.</p>
+        <p class="section-body" style="margin-bottom:24px">Bilu acts like a passive coolant running in the background. The bilateral stimulus continuously dampens amygdala reactivity, preventing the cortisol accumulation that leads to exhaustion, emotional depletion, and cognitive decline.</p>
+        <p class="section-body" style="font-size:13px;color:var(--text-muted)">Think of it as the difference between a car that runs hot all day and one with a properly functioning cooling system. Same engine. Very different outcome over time.</p>
       </div>
-      <p class="section-body">Bilateral stimulation isn't a wellness trend. It's the core mechanism behind EMDR — one of the most rigorously studied therapies in existence, with over 30 published randomized controlled trials. We took that mechanism and built a passive, always-on tool around it.</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:24px 28px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent);"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Without Bilu</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:#ff6b6b;font-size:16px;">&#x2191;</span> Cortisol accumulates throughout the day</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:#ff6b6b;font-size:16px;">&#x2191;</span> Amygdala stays in heightened state</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:#ff6b6b;font-size:16px;">&#x2191;</span> Decision fatigue sets in by afternoon</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:#ff6b6b;font-size:16px;">&#x2191;</span> Chronic stress leads to burnout</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:0.5px solid rgba(125,232,200,0.15);border-radius:12px;padding:24px 28px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;">With Bilu</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:var(--cyan);font-size:16px;">&#x2193;</span> Continuous amygdala regulation</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:var(--cyan);font-size:16px;">&#x2193;</span> Cortisol peaks stay lower throughout day</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:var(--cyan);font-size:16px;">&#x2193;</span> Sustained cognitive performance</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dim)"><span style="color:var(--cyan);font-size:16px;">&#x2193;</span> Resilience builds over time</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="science-cards">
-      <div class="science-card reveal">
-        <span class="science-icon">🧠</span>
-        <h3>Bilateral stimulation dampens the amygdala</h3>
-        <p>Rhythmic left-right sensory input suppresses excitability in the basolateral nucleus of the amygdala — the brain's primary fear and stress center — through activation of the superior colliculus and mediodorsal thalamus.</p>
-        <div class="card-cite">Baek et al. (2019) — Systematic review of bilateral stimulation mechanisms</div>
+  </div>
+</div>
+
+<!-- HEART RATE + LIVE DEMO -->
+<div class="hr-section" id="heartrate">
+  <div>
+    <div class="section-eyebrow">Heart Rate Integration</div>
+    <h2 class="section-title">Your body tells it<br>when to <em>intervene.</em></h2>
+    <p class="section-body" style="margin-bottom:20px">Connect a compatible Bluetooth heart rate monitor and Bilu becomes adaptive. When your BPM spikes above your personal baseline, the app responds — slowing the ball, shifting to amber and red, and guiding you through a breathing cycle until you're calm.</p>
+    <p class="section-body" style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Compatible with Polar H10, Polar Verity Sense, and any standard Bluetooth LE heart rate monitor.</p>
+    <p class="section-body" style="font-size:13px;color:var(--text-muted)">Apple Watch integration — coming soon.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:20px;">
+    <!-- Live animated demo -->
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px">Live Demo — Stress Response</div>
+      <div style="position:relative;height:80px;margin-bottom:20px;">
+        <div style="position:absolute;top:50%;left:0;right:0;height:0.5px;background:linear-gradient(90deg,transparent,var(--border),var(--cyan-dim),var(--border),transparent);transform:translateY(-50%)"></div>
+        <div id="demoCalmBall" style="position:absolute;top:50%;left:8%;width:40px;height:40px;border-radius:50%;transform:translate(-50%,-50%);"></div>
       </div>
-      <div class="science-card reveal">
-        <span class="science-icon">⚡</span>
-        <h3>Proven across 30+ randomized controlled trials</h3>
-        <p>EMDR therapy — built on bilateral stimulation — sits on the same evidence tier as Cognitive Processing Therapy in U.S. Department of Veterans Affairs clinical guidelines. It measurably reduces amygdala reactivity and alters brainwave patterns associated with threat.</p>
-        <div class="card-cite">VA/DoD Clinical Guidelines (2023) — Wright et al. meta-analysis (2024)</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">State</div>
+        <div id="demoPhaseLabel" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;transition:color 1.5s ease;color:var(--cyan)">Calm</div>
       </div>
-      <div class="science-card reveal">
-        <span class="science-icon">🎵</span>
-        <h3>528Hz — embedded in every session</h3>
-        <p>Our binaural layer uses 528Hz paired with synchronized stereo panning. This dual-channel stimulus engages both hemispheres simultaneously, creating a deeper regulatory effect than visual stimulation alone.</p>
-        <div class="card-cite">PLOS One fMRI study — alternating auditory stimulation and amygdala response</div>
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)">Breathing Guide</span>
+          <span id="demoBreathLabel" style="font-family:'DM Mono',monospace;font-size:10px;transition:color 0.5s;opacity:0;color:var(--cyan)">BREATHE IN</span>
+        </div>
+        <div style="height:5px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;">
+          <div id="demoBreathBar" style="height:100%;width:0%;border-radius:3px;background:linear-gradient(90deg,var(--cyan),var(--amber));"></div>
+        </div>
       </div>
-      <div class="science-card reveal">
-        <span class="science-icon">👁️</span>
-        <h3>Peripheral vision, not focused attention</h3>
-        <p>Unlike traditional EMDR which requires active eye tracking, Bilu works through peripheral vision — meaning you never stop working. The effect happens automatically through your visual system's ambient processing channels.</p>
-        <div class="card-cite">Stingl et al. (2025) — British Journal of Psychiatry Open</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:baseline;gap:6px;">
+          <span id="demoBPM" style="font-family:'DM Mono',monospace;font-size:28px;line-height:1;transition:color 1.5s ease;color:var(--cyan)">68</span>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">BPM</span>
+        </div>
+        <div id="demoStatusPill" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;background:rgba(125,232,200,0.07);border:0.5px solid rgba(125,232,200,0.18);transition:all 1.5s ease;">
+          <div id="demoStatusDot" style="width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:blink2 2s ease-in-out infinite;transition:background 1.5s ease;"></div>
+          <span id="demoStatusText" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;transition:color 1.5s ease;color:var(--cyan)">CALM</span>
+        </div>
       </div>
-      <div class="science-card reveal">
-        <span class="science-icon">💓</span>
-        <h3>Heart rate-driven adaptive response</h3>
-        <p>When your heart rate rises above your personal baseline, the app enters guided breathing mode. The 4-second inhale, 6-second exhale cycle activates the parasympathetic nervous system and reduces cortisol — while you keep working.</p>
-        <div class="card-cite">HRV breathing research — parasympathetic nervous system activation</div>
+    </div>
+    <!-- Static HR panel -->
+    <div class="hr-visual">
+      <div class="hr-header">
+        <div class="hr-bpm">94<span>BPM</span></div>
+        <div class="hr-status"><div class="hr-status-dot"></div>ELEVATED</div>
       </div>
-      <div class="science-card reveal">
-        <span class="science-icon">🔄</span>
-        <h3>Passive, not active — the key difference</h3>
-        <p>Every existing bilateral stimulation tool requires a dedicated session. Bilu is the first passive implementation — designed to run continuously in the background, providing cumulative regulatory benefit across an entire workday.</p>
-        <div class="card-cite">Novel application — continuous peripheral bilateral stimulation during cognitive work</div>
+      <div class="bar-label"><span>Stress Level</span><span>ELEVATED</span></div>
+      <div class="hr-bar-bg"><div class="hr-bar-fill"></div></div>
+      <div class="bar-label" style="margin-top:20px"><span>Breathing Guide</span><span style="color:var(--cyan)">BREATHE IN →</span></div>
+      <div class="hr-bar-bg"><div class="hr-bar-fill2"></div></div>
+      <div class="coming-soon">🍎 &nbsp; Apple Watch support — coming soon</div>
+    </div>
+  </div>
+</div>
+
+<!-- CALM MODE SECTION -->
+<div style="background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:120px 48px;" id="calm">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+
+      <!-- Left: interactive demo -->
+      <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:20px;padding:40px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)"></div>
+
+        <!-- Ball track -->
+        <div style="position:relative;height:100px;margin-bottom:28px;">
+          <div style="position:absolute;top:50%;left:0;right:0;height:0.5px;background:linear-gradient(90deg,transparent,rgba(125,232,200,0.1),rgba(125,232,200,0.2),rgba(125,232,200,0.1),transparent);transform:translateY(-50%)"></div>
+          <div id="calmDemoBall" style="position:absolute;top:50%;left:8%;width:48px;height:48px;border-radius:50%;transform:translate(-50%,-50%);"></div>
+        </div>
+
+        <!-- Breath bar -->
+        <div style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">Breathing Guide</span>
+            <span id="calmBreathLabel" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--cyan);opacity:0;transition:opacity 0.5s,color 0.5s">BREATHE IN</span>
+          </div>
+          <div style="height:6px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;">
+            <div id="calmBreathBar" style="height:100%;width:0%;border-radius:3px;background:linear-gradient(90deg,var(--cyan),var(--amber));transition:background 1s ease;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted)">4s inhale</span>
+            <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted)">6s exhale</span>
+          </div>
+        </div>
+
+        <!-- Status row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+          <div id="calmStatus" style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;background:rgba(125,232,200,0.06);border:0.5px solid rgba(125,232,200,0.15);">
+            <div id="calmStatusDot" style="width:5px;height:5px;border-radius:50%;background:var(--text-muted);"></div>
+            <span id="calmStatusText" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--text-muted)">INACTIVE</span>
+          </div>
+          <div id="calmTimer" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);display:none"></div>
+        </div>
+
+        <!-- Buttons -->
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;">
+            <button onclick="startCalmDemo(2)" style="flex:1;padding:11px;border-radius:100px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;box-shadow:0 0 20px rgba(125,232,200,0.2)">2 min</button>
+            <button onclick="startCalmDemo(5)" style="flex:1;padding:11px;border-radius:100px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;box-shadow:0 0 20px rgba(125,232,200,0.2)">5 min</button>
+            <button onclick="startCalmDemo(10)" style="flex:1;padding:11px;border-radius:100px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;box-shadow:0 0 20px rgba(125,232,200,0.2)">10 min</button>
+          </div>
+          <button onclick="stopCalmDemo()" style="padding:11px;border-radius:100px;background:transparent;color:var(--text-muted);font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;border:0.5px solid rgba(125,232,200,0.08);cursor:pointer;transition:all 0.2s;">Stop</button>
+        </div>
+
+        <div style="margin-top:16px;padding:10px 14px;background:rgba(74,158,255,0.05);border:0.5px solid rgba(74,158,255,0.1);border-radius:8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.08em;text-align:center;">
+          In the app: right-click the menu bar icon → Calm Mode
+        </div>
+      </div>
+
+      <!-- Right: text -->
+      <div>
+        <div class="section-eyebrow">Calm Mode</div>
+        <h2 class="section-title">No watch?<br><em>No problem.</em></h2>
+        <p class="section-body" style="margin-bottom:24px">You don't need a heart rate monitor to access Bilu's breathing guide. Calm Mode lets you manually trigger the full stress-response system — the ball slows, the glow shifts, and the breathing pulse activates on demand.</p>
+        <p class="section-body" style="margin-bottom:24px">Choose 2, 5, or 10 minutes. Bilu guides your nervous system through a regulated breathing cycle, then automatically returns to normal when the session ends.</p>
+
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
+          <div style="display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--surface);border:0.5px solid var(--border);border-radius:10px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(125,232,200,0.08);border:0.5px solid rgba(125,232,200,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;min-width:32px;">🫁</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">4-6 breathing rhythm</div><div style="font-size:12px;color:var(--text-dim);line-height:1.6">Clinically shown to activate the parasympathetic nervous system and reduce cortisol in minutes.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--surface);border:0.5px solid var(--border);border-radius:10px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(125,232,200,0.08);border:0.5px solid rgba(125,232,200,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;min-width:32px;">🎨</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Visual color shift</div><div style="font-size:12px;color:var(--text-dim);line-height:1.6">Ball glows shift from blue to amber — a visual anchor that keeps your peripheral attention grounded.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--surface);border:0.5px solid var(--border);border-radius:10px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(125,232,200,0.08);border:0.5px solid rgba(125,232,200,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;min-width:32px;">⚡</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">One click from the tray</div><div style="font-size:12px;color:var(--text-dim);line-height:1.6">Right-click the Bilu icon in your Mac menu bar. No interruption to your workflow.</div></div>
+          </div>
+        </div>
+
+        <div style="padding:14px 20px;background:rgba(125,232,200,0.04);border:0.5px solid rgba(125,232,200,0.12);border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;color:rgba(125,232,200,0.6);text-transform:uppercase;">
+          🔒 Pro feature — available after license activation
+        </div>
       </div>
     </div>
   </div>
@@ -346,314 +433,14 @@
     <div class="feature"><div class="feature-icon">⚪</div><h3>Transparent overlay</h3><p>A semi-transparent orb that lives above all your windows, across every desktop and Space on your Mac.</p></div>
     <div class="feature"><div class="feature-icon">🖱️</div><h3>Mouse avoidance</h3><p>The ball intelligently moves away from your cursor so it never blocks anything you're working on.</p></div>
     <div class="feature"><div class="feature-icon">🎵</div><h3>Binaural panning</h3><p>A 528Hz tone pans in perfect sync with the ball — left ear to right ear, sub-mixed under your existing audio.</p></div>
-    <div class="feature"><div class="feature-icon">🌧️</div><h3>Ambient soundscapes</h3><p>Rain, brown noise, lo-fi hum, or our custom 80 BPM bilateral ambient track layered beneath the binaural tone.</p></div>
+    <div class="feature"><div class="feature-icon">🌧️</div><h3>Ambient soundscapes</h3><p>Our custom 80 BPM bilateral ambient track layered beneath the binaural tone for deeper calm.</p></div>
     <div class="feature"><div class="feature-icon">💓</div><h3>Heart rate response</h3><p>Connect a Bluetooth heart rate monitor and the app automatically responds to stress spikes in real time.</p></div>
-    <div class="feature"><div class="feature-icon">🫁</div><h3>Breathing guide</h3><p>At elevated stress the orb shifts into a breathing pulse — stays red and expanded until your heart rate fully stabilizes.</p></div>
-    <div class="feature"><div class="feature-icon">🎨</div><h3>Customizable appearance</h3><p>Adjust opacity, size, speed, and color. Blue or white. From barely visible to unmissable.</p></div>
+    <div class="feature"><div class="feature-icon">🫁</div><h3>Breathing guide</h3><p>At elevated stress the orb shifts into a breathing pulse — stays expanded until your heart rate fully stabilizes.</p></div>
+    <div class="feature"><div class="feature-icon">🌊</div><h3>Calm Mode</h3><p>No heart rate monitor? Manually trigger the breathing guide for 2, 5, or 10 minutes from your menu bar.</p></div>
     <div class="feature"><div class="feature-icon">⚡</div><h3>Always on, all spaces</h3><p>Runs from the menu bar. Follows you across every desktop, fullscreen app, and Mission Control space.</p></div>
     <div class="feature"><div class="feature-icon">🔋</div><h3>Battery optimized</h3><p>Runs at 30fps with hardware acceleration disabled. Designed to run all day without draining your battery.</p></div>
   </div>
 </section>
-
-<!-- BURNOUT SECTION -->
-<div style="background: var(--bg2); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); padding: 120px 48px;">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
-      <div>
-        <div class="section-eyebrow">Burnout Prevention</div>
-        <h2 class="section-title">Your brain<br>needs a <em>cooling<br>system.</em></h2>
-        <p class="section-body" style="margin-bottom: 24px">Burnout isn't caused by working hard. It's caused by your nervous system never getting a chance to regulate — accumulating stress day after day until the system breaks down.</p>
-        <p class="section-body" style="margin-bottom: 24px">Bilateral Focus acts like a passive coolant running in the background. The bilateral stimulus continuously dampens amygdala reactivity, preventing the cortisol accumulation that leads to exhaustion, emotional depletion, and cognitive decline.</p>
-        <p class="section-body" style="font-size:13px; color: var(--text-muted)">Think of it as the difference between a car that runs hot all day and one with a properly functioning cooling system. Same engine. Very different outcome over time.</p>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <div style="background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 24px 28px; position: relative; overflow: hidden;">
-          <div style="position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);"></div>
-          <div style="font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;">Without Bilateral Focus</div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--red); font-size: 16px;">&#x2191;</span> Cortisol accumulates throughout the day</div>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--red); font-size: 16px;">&#x2191;</span> Amygdala stays in heightened state</div>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--red); font-size: 16px;">&#x2191;</span> Decision fatigue sets in by afternoon</div>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--red); font-size: 16px;">&#x2191;</span> Chronic stress leads to burnout</div>
-          </div>
-        </div>
-        <div style="background: var(--surface); border: 0.5px solid rgba(125,232,200,0.15); border-radius: 12px; padding: 24px 28px; position: relative; overflow: hidden;">
-          <div style="position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan), transparent);"></div>
-          <div style="font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px;">With Bilateral Focus</div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--cyan); font-size: 16px;">&#x2193;</span> Continuous amygdala regulation</div>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--cyan); font-size: 16px;">&#x2193;</span> Cortisol peaks stay lower throughout day</div>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--cyan); font-size: 16px;">&#x2193;</span> Sustained cognitive performance</div>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim)"><span style="color: var(--cyan); font-size: 16px;">&#x2193;</span> Resilience builds over time</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- HEART RATE -->
-<!-- HR -->
-<div class="hr-section" id="heartrate">
-  <div>
-    <div class="section-eyebrow">Heart Rate Integration</div>
-    <h2 class="section-title">Your body tells it<br>when to <em>intervene.</em></h2>
-    <p class="section-body" style="margin-bottom:20px">Connect a compatible Bluetooth heart rate monitor and Bilu becomes adaptive. When your BPM spikes above your personal baseline, the app responds — slowing the ball, shifting to amber and red, and guiding you through a breathing cycle until you're calm.</p>
-    <p class="section-body" style="font-size:13px;color:var(--text-muted);margin-bottom:20px">Compatible with Polar H10, Polar Verity Sense, and any standard Bluetooth LE heart rate monitor.</p>
-    <p class="section-body" style="font-size:13px;color:var(--text-muted)">Apple Watch integration — coming soon.</p>
-  </div>
-
-  <div style="display:flex; flex-direction:column; gap:20px;">
-
-    <!-- Live ball demo -->
-    <div style="background:var(--surface); border:0.5px solid var(--border); border-radius:16px; padding:28px; position:relative; overflow:hidden;">
-      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)"></div>
-
-      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px">Live Demo — Calm Mode</div>
-
-      <!-- Ball track -->
-      <div style="position:relative;height:80px;margin-bottom:20px;">
-        <div style="position:absolute;top:50%;left:0;right:0;height:0.5px;background:linear-gradient(90deg,transparent,var(--border),var(--cyan-dim),var(--border),transparent);transform:translateY(-50%)"></div>
-        <div id="demoCalmBall" style="
-          position:absolute;
-          top:50%;
-          left:8%;
-          width:40px;
-          height:40px;
-          border-radius:50%;
-          transform:translate(-50%,-50%);
-          background:radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%);
-          box-shadow:0 0 10px 4px rgba(100,180,255,0.9),0 0 24px 8px rgba(80,150,255,0.6),0 0 44px 13px rgba(60,120,255,0.3);
-        "></div>
-      </div>
-
-      <!-- Phase label -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)">State</div>
-        <div id="demoPhaseLabel" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;transition:color 1.5s ease">Calm</div>
-      </div>
-
-      <!-- Breathing bar -->
-      <div style="margin-bottom:10px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-          <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)">Breathing Guide</span>
-          <span id="demoBreathLabel" style="font-family:'DM Mono',monospace;font-size:10px;transition:color 0.5s;opacity:0">BREATHE IN</span>
-        </div>
-        <div style="height:5px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;">
-          <div id="demoBreathBar" style="height:100%;width:0%;border-radius:3px;"></div>
-        </div>
-      </div>
-
-      <!-- BPM display -->
-      <div style="display:flex;align-items:center;justify-content:space-between;">
-        <div style="display:flex;align-items:baseline;gap:6px;">
-          <span id="demoBPM" style="font-family:'DM Mono',monospace;font-size:28px;line-height:1;transition:color 1.5s ease">68</span>
-          <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">BPM</span>
-        </div>
-        <div id="demoStatusPill" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;transition:all 1.5s ease;">
-          <div id="demoStatusDot" style="width:5px;height:5px;border-radius:50%;animation:blink 2s ease-in-out infinite;transition:background 1.5s ease;"></div>
-          <span id="demoStatusText" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;transition:color 1.5s ease">CALM</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Static HR panel -->
-    <div class="hr-visual">
-      <div class="hr-header">
-        <div class="hr-bpm">94<span>BPM</span></div>
-        <div class="hr-status"><div class="hr-status-dot"></div>ELEVATED</div>
-      </div>
-      <div class="bar-label"><span>Stress Level</span><span>ELEVATED</span></div>
-      <div class="hr-bar-bg"><div class="hr-bar-fill"></div></div>
-      <div class="bar-label bar-label2" style="margin-top:20px"><span>Breathing Guide</span><span>BREATHE IN →</span></div>
-      <div class="hr-bar-bg"><div class="hr-bar-fill2"></div></div>
-      <div class="coming-soon">🍎 &nbsp; Apple Watch support — coming soon</div>
-    </div>
-
-  </div>
-</div>
-
-<style>
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  #demoCalmBall { transition: width 0.4s ease, height 0.4s ease; }
-</style>
-
-<script>
-(function () {
-  const ball        = document.getElementById('demoCalmBall')
-  const bpmEl       = document.getElementById('demoBPM')
-  const phaseLabel  = document.getElementById('demoPhaseLabel')
-  const breathBar   = document.getElementById('demoBreathBar')
-  const breathLabel = document.getElementById('demoBreathLabel')
-  const statusDot   = document.getElementById('demoStatusDot')
-  const statusText  = document.getElementById('demoStatusText')
-  const statusPill  = document.getElementById('demoStatusPill')
-
-  if (!ball) return
-
-  /* ── colour stops ───────────────────────────────── */
-  const BLUE  = { r: 80,  g: 160, b: 255 }
-  const AMBER = { r: 240, g: 160, b: 40  }
-
-  /* ── state ──────────────────────────────────────── */
-  let ballPos    = 8
-  let ballDir    = 1
-  let breathPct  = 0
-  let breathIn   = true
-  let phase      = 'calm'
-  let phaseStart = 0
-  let bpm        = 68
-  let targetBpm  = 68
-  let lastTs     = 0
-
-  const phases = {
-    calm:       { dur: 4000, next: 'rising'     },
-    rising:     { dur: 4000, next: 'stressed'   },
-    stressed:   { dur: 5000, next: 'recovering' },
-    recovering: { dur: 5000, next: 'calm'       }
-  }
-
-  /* ── helpers ────────────────────────────────────── */
-  function lerp(a, b, t)    { return a + (b - a) * t }
-  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)) }
-
-  /* ── apply colour (t=0 blue, t=1 amber) ─────────── */
-  function applyColor(t) {
-    t = clamp(t, 0, 1)
-    const r   = Math.round(lerp(BLUE.r, AMBER.r, t))
-    const g   = Math.round(lerp(BLUE.g, AMBER.g, t))
-    const b   = Math.round(lerp(BLUE.b, AMBER.b, t))
-    const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')
-
-    /* ball size */
-    const size = Math.round(lerp(40, 52, t))
-    ball.style.width  = size + 'px'
-    ball.style.height = size + 'px'
-
-    /* ball gradient */
-    ball.style.background = `radial-gradient(circle at center,
-      rgba(0,0,0,0.5) 0%,
-      rgba(${Math.round(r*0.2)},${Math.round(g*0.2)},${Math.round(b*0.1)},0.3) 30%,
-      rgba(${r},${g},${b},0.65) 58%,
-      rgba(${Math.min(255,r+30)},${Math.min(255,g+30)},${Math.min(255,b+30)},0.9) 74%,
-      rgba(${Math.min(255,r+60)},${Math.min(255,g+50)},${Math.min(255,b+60)},1.0) 87%,
-      rgba(255,255,255,0.5) 100%)`
-
-    /* glow */
-    ball.style.boxShadow = `
-      0 0 10px 4px rgba(${r},${g},${b},0.9),
-      0 0 24px 8px rgba(${r},${g},${b},0.6),
-      0 0 44px 13px rgba(${r},${g},${b},0.3)`
-
-    /* UI elements */
-    bpmEl.style.color            = hex
-    phaseLabel.style.color       = hex
-    statusText.style.color       = hex
-    statusDot.style.background   = hex
-    breathLabel.style.color      = hex
-    statusPill.style.background  = `rgba(${r},${g},${b},0.07)`
-    statusPill.style.border      = `0.5px solid rgba(${r},${g},${b},0.18)`
-    breathBar.style.background   = `linear-gradient(90deg,
-      rgba(${BLUE.r},${BLUE.g},${BLUE.b},1),
-      rgba(${r},${g},${b},1))`
-  }
-
-  /* ── phase transitions ──────────────────────────── */
-  function setPhase(p, ts) {
-    phase      = p
-    phaseStart = ts
-    if (p === 'calm') {
-      targetBpm = 66 + Math.random() * 6
-      phaseLabel.textContent    = 'Calm'
-      statusText.textContent    = 'CALM'
-      breathLabel.style.opacity = '0'
-    } else if (p === 'rising') {
-      targetBpm = 95 + Math.random() * 8
-      phaseLabel.textContent    = 'Stress Rising'
-      statusText.textContent    = 'ELEVATED'
-      breathLabel.style.opacity = '0'
-    } else if (p === 'stressed') {
-      targetBpm = 108 + Math.random() * 8
-      phaseLabel.textContent    = 'High Stress'
-      statusText.textContent    = 'HIGH STRESS'
-      breathLabel.style.opacity = '1'
-      breathLabel.textContent   = 'BREATHE IN'
-    } else if (p === 'recovering') {
-      targetBpm = 70 + Math.random() * 6
-      phaseLabel.textContent    = 'Recovering'
-      statusText.textContent    = 'CALMING'
-      breathLabel.style.opacity = '1'
-    }
-  }
-
-  /* ── main loop ──────────────────────────────────── */
-  function animate(ts) {
-    const dt      = Math.min(ts - lastTs, 50)
-    lastTs        = ts
-    const elapsed = ts - phaseStart
-    const dur     = phases[phase].dur
-
-    /* advance phase */
-    if (elapsed > dur) {
-      setPhase(phases[phase].next, ts)
-    }
-
-    const progress = clamp(elapsed / dur, 0, 1)
-
-    /* colour coefficient per phase */
-    let colorT = 0
-    if      (phase === 'calm')       colorT = 0
-    else if (phase === 'rising')     colorT = progress       /* 0 → 1 */
-    else if (phase === 'stressed')   colorT = 1
-    else if (phase === 'recovering') colorT = 1 - progress   /* 1 → 0 */
-
-    applyColor(colorT)
-
-    /* ball movement — slows under stress */
-    const speed = lerp(0.055, 0.018, colorT)
-    ballPos += speed * ballDir * (dt / 16)
-    if (ballPos >= 92) { ballPos = 92; ballDir = -1 }
-    if (ballPos <=  8) { ballPos =  8; ballDir =  1 }
-    ball.style.left = ballPos + '%'
-
-    /* BPM drift */
-    bpm += (targetBpm - bpm) * 0.012
-    bpmEl.textContent = Math.round(bpm)
-
-    /* breathing bar — active when stressed or recovering */
-    if (phase === 'stressed' || phase === 'recovering') {
-      if (breathIn) {
-        breathPct += 0.004 * (dt / 16)
-        if (breathPct >= 1) {
-          breathPct = 1; breathIn = false
-          breathLabel.textContent = 'BREATHE OUT'
-        }
-      } else {
-        breathPct -= 0.003 * (dt / 16)
-        if (breathPct <= 0) {
-          breathPct = 0; breathIn = true
-          breathLabel.textContent = 'BREATHE IN'
-        }
-      }
-      if (phase === 'recovering') {
-        const s = Math.round(lerp(44, 52, breathPct) * (1 - progress * 0.25))
-        ball.style.width  = s + 'px'
-        ball.style.height = s + 'px'
-      }
-    } else {
-      breathPct *= 0.92
-    }
-    breathBar.style.width = (breathPct * 100) + '%'
-
-    requestAnimationFrame(animate)
-  }
-
-  /* ── kick off ───────────────────────────────────── */
-  setPhase('calm', 0)
-  applyColor(0)
-  requestAnimationFrame(ts => { lastTs = ts; animate(ts) })
-})()
-</script>
 
 <!-- PRICING -->
 <section id="pricing" style="text-align:center">
@@ -674,6 +461,7 @@
         <li class="locked">Ambient soundscapes</li>
         <li class="locked">Heart rate response</li>
         <li class="locked">Breathing guide</li>
+        <li class="locked">Calm Mode</li>
         <li class="locked">Color themes</li>
       </ul>
       <a href="#download" class="pricing-btn free">Download Free</a>
@@ -686,12 +474,12 @@
       <ul class="pricing-features">
         <li>Everything in Free</li>
         <li>Binaural 528Hz panning</li>
-        <li>All ambient soundscapes</li>
+        <li>Ambient soundscapes</li>
         <li>Heart rate response</li>
         <li>Guided breathing mode</li>
+        <li>Calm Mode (2, 5, 10 min)</li>
         <li>Color themes</li>
         <li>Full size &amp; speed control</li>
-        <li>Priority support</li>
         <li>All future updates</li>
       </ul>
       <a href="#download" class="pricing-btn pro">Get Pro — $24.99</a>
@@ -707,16 +495,15 @@
   <p class="section-body reveal" style="max-width:480px;margin:0 auto 48px;text-align:center">Available for macOS 12 Monterey or later. Apple Silicon and Intel both supported.</p>
   <div class="hero-actions" style="justify-content:center;opacity:1;animation:none">
     <a href="#" class="btn-primary">⬇ Download for Mac</a>
-    <a href="#science" class="btn-secondary">Read the Science</a>
+    <a href="science.html" class="btn-secondary">Read the Science</a>
   </div>
   <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.1em;margin-top:20px;text-transform:uppercase">Free 7-Day Trial — No Credit Card Required</p>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><div class="footer-dot"></div><span class="footer-name">Bilateral Focus</span></div>
-  <div class="footer-copy">&copy; 2025 Bilateral Focus. All rights reserved.</div>
-  <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+  <div class="footer-logo"><div class="footer-dot"></div><span class="footer-name">Bilu</span></div>
+  <div class="footer-copy">&copy; 2025 Bilu. All rights reserved.</div>
+  <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="science.html">Science</a><a href="#">Contact</a></div>
 </footer>
 
 <script>
@@ -728,9 +515,7 @@
       }
     })
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
-
   document.querySelectorAll('.reveal, .step').forEach(el => observer.observe(el))
-
   document.addEventListener('mousemove', (e) => {
     const glow = document.querySelector('.hero-glow')
     if (!glow) return
@@ -738,6 +523,145 @@
     const y = (e.clientY / window.innerHeight - 0.5) * 20
     glow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`
   })
+
+  /* ── HR live demo ───────────────────────── */
+  ;(function(){
+    const ball=document.getElementById('demoCalmBall')
+    const bpmEl=document.getElementById('demoBPM')
+    const phaseLabel=document.getElementById('demoPhaseLabel')
+    const breathBar=document.getElementById('demoBreathBar')
+    const breathLabel=document.getElementById('demoBreathLabel')
+    const statusDot=document.getElementById('demoStatusDot')
+    const statusText=document.getElementById('demoStatusText')
+    const statusPill=document.getElementById('demoStatusPill')
+    if(!ball)return
+    const BLUE={r:80,g:160,b:255},AMBER={r:240,g:160,b:40}
+    let ballPos=8,ballDir=1,breathPct=0,breathIn=true,phase='calm',phaseStart=0,bpm=68,targetBpm=68,lastTs=0
+    const phases={calm:{dur:4000,next:'rising'},rising:{dur:4000,next:'stressed'},stressed:{dur:5000,next:'recovering'},recovering:{dur:5000,next:'calm'}}
+    function lerp(a,b,t){return a+(b-a)*t}
+    function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v))}
+    function applyColor(t){
+      t=clamp(t,0,1)
+      const r=Math.round(lerp(BLUE.r,AMBER.r,t)),g=Math.round(lerp(BLUE.g,AMBER.g,t)),b=Math.round(lerp(BLUE.b,AMBER.b,t))
+      const hex='#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('')
+      const size=Math.round(lerp(40,52,t))
+      ball.style.width=size+'px';ball.style.height=size+'px'
+      ball.style.background=`radial-gradient(circle at center,rgba(0,0,0,0.5) 0%,rgba(${Math.round(r*.2)},${Math.round(g*.2)},${Math.round(b*.1)},0.3) 30%,rgba(${r},${g},${b},0.65) 58%,rgba(${Math.min(255,r+30)},${Math.min(255,g+30)},${Math.min(255,b+30)},0.9) 74%,rgba(${Math.min(255,r+60)},${Math.min(255,g+50)},${Math.min(255,b+60)},1.0) 87%,rgba(255,255,255,0.5) 100%)`
+      ball.style.boxShadow=`0 0 10px 4px rgba(${r},${g},${b},0.9),0 0 24px 8px rgba(${r},${g},${b},0.6),0 0 44px 13px rgba(${r},${g},${b},0.3)`
+      bpmEl.style.color=hex;phaseLabel.style.color=hex;statusText.style.color=hex
+      statusDot.style.background=hex;breathLabel.style.color=hex
+      statusPill.style.background=`rgba(${r},${g},${b},0.07)`;statusPill.style.border=`0.5px solid rgba(${r},${g},${b},0.18)`
+      breathBar.style.background=`linear-gradient(90deg,rgba(${BLUE.r},${BLUE.g},${BLUE.b},1),rgba(${r},${g},${b},1))`
+    }
+    function setPhase(p,ts){
+      phase=p;phaseStart=ts
+      if(p==='calm'){targetBpm=66+Math.random()*6;phaseLabel.textContent='Calm';statusText.textContent='CALM';breathLabel.style.opacity='0'}
+      else if(p==='rising'){targetBpm=95+Math.random()*8;phaseLabel.textContent='Stress Rising';statusText.textContent='ELEVATED';breathLabel.style.opacity='0'}
+      else if(p==='stressed'){targetBpm=108+Math.random()*8;phaseLabel.textContent='High Stress';statusText.textContent='HIGH STRESS';breathLabel.style.opacity='1';breathLabel.textContent='BREATHE IN'}
+      else if(p==='recovering'){targetBpm=70+Math.random()*6;phaseLabel.textContent='Recovering';statusText.textContent='CALMING';breathLabel.style.opacity='1'}
+    }
+    function animate(ts){
+      const dt=Math.min(ts-lastTs,50);lastTs=ts
+      const elapsed=ts-phaseStart,dur=phases[phase].dur
+      if(elapsed>dur)setPhase(phases[phase].next,ts)
+      const progress=clamp(elapsed/dur,0,1)
+      let colorT=0
+      if(phase==='calm')colorT=0
+      else if(phase==='rising')colorT=progress
+      else if(phase==='stressed')colorT=1
+      else if(phase==='recovering')colorT=1-progress
+      applyColor(colorT)
+      const speed=lerp(0.055,0.018,colorT)
+      ballPos+=speed*ballDir*(dt/16)
+      if(ballPos>=92){ballPos=92;ballDir=-1}
+      if(ballPos<=8){ballPos=8;ballDir=1}
+      ball.style.left=ballPos+'%'
+      bpm+=(targetBpm-bpm)*0.012
+      bpmEl.textContent=Math.round(bpm)
+      if(phase==='stressed'||phase==='recovering'){
+        if(breathIn){breathPct+=0.004*(dt/16);if(breathPct>=1){breathPct=1;breathIn=false;breathLabel.textContent='BREATHE OUT'}}
+        else{breathPct-=0.003*(dt/16);if(breathPct<=0){breathPct=0;breathIn=true;breathLabel.textContent='BREATHE IN'}}
+        if(phase==='recovering'){const s=Math.round(lerp(44,52,breathPct)*(1-progress*0.25));ball.style.width=s+'px';ball.style.height=s+'px'}
+      } else {breathPct*=0.92}
+      breathBar.style.width=(breathPct*100)+'%'
+      requestAnimationFrame(animate)
+    }
+    setPhase('calm',0);applyColor(0)
+    requestAnimationFrame(ts=>{lastTs=ts;animate(ts)})
+  })()
+
+  /* ── Calm Mode interactive demo ─────────── */
+  let calmActive=false,calmEnd=0,calmInterval=null,calmBreathPulse=0,calmBreathIn=true,calmBallPos=8,calmBallDir=1,calmAnimFrame=null,calmLastTs=0
+
+  function startCalmDemo(minutes){
+    stopCalmDemo()
+    calmActive=true
+    calmEnd=Date.now()+minutes*60*1000
+    const ball=document.getElementById('calmDemoBall')
+    const statusDot=document.getElementById('calmStatusDot')
+    const statusText=document.getElementById('calmStatusText')
+    const breathLabel=document.getElementById('calmBreathLabel')
+    const timerEl=document.getElementById('calmTimer')
+    statusDot.style.background='var(--cyan)'
+    statusText.style.color='var(--cyan)'
+    statusText.textContent='ACTIVE'
+    breathLabel.style.opacity='1'
+    timerEl.style.display='block'
+    function animCalm(ts){
+      if(!calmActive)return
+      const dt=Math.min(ts-calmLastTs,50);calmLastTs=ts
+      const remaining=Math.max(0,calmEnd-Date.now())
+      const m=Math.floor(remaining/60000),s=Math.floor((remaining%60000)/1000)
+      timerEl.textContent=m+':'+(s<10?'0':'')+s+' remaining'
+      if(remaining<=0){stopCalmDemo();return}
+      calmBallPos+=0.02*calmBallDir*(dt/16)
+      if(calmBallPos>=88){calmBallPos=88;calmBallDir=-1}
+      if(calmBallPos<=8){calmBallPos=8;calmBallDir=1}
+      ball.style.left=calmBallPos+'%'
+      if(calmBreathIn){calmBreathPulse+=0.004*(dt/16);if(calmBreathPulse>=1){calmBreathPulse=1;calmBreathIn=false;breathLabel.textContent='BREATHE OUT';breathLabel.style.color='var(--cyan)'}}
+      else{calmBreathPulse-=0.003*(dt/16);if(calmBreathPulse<=0){calmBreathPulse=0;calmBreathIn=true;breathLabel.textContent='BREATHE IN';breathLabel.style.color='var(--amber)'}}
+      document.getElementById('calmBreathBar').style.width=(calmBreathPulse*100)+'%'
+      const size=44+calmBreathPulse*12
+      ball.style.width=size+'px';ball.style.height=size+'px'
+      const t=calmBreathPulse
+      const r=Math.round(80+t*160),g=Math.round(160+t*0),b2=Math.round(255-t*215)
+      ball.style.background=`radial-gradient(circle at center,rgba(0,0,0,0.5) 0%,rgba(${Math.round(r*.2)},${Math.round(g*.2)},0,0.3) 30%,rgba(${r},${g},${b2},0.65) 58%,rgba(255,255,255,0.9) 87%,rgba(255,255,255,0.5) 100%)`
+      ball.style.boxShadow=`0 0 10px 4px rgba(${r},${g},${b2},0.9),0 0 24px 8px rgba(${r},${g},${b2},0.6),0 0 44px 13px rgba(${r},${g},${b2},0.3)`
+      calmAnimFrame=requestAnimationFrame(animCalm)
+    }
+    calmLastTs=performance.now()
+    calmAnimFrame=requestAnimationFrame(animCalm)
+  }
+
+  function stopCalmDemo(){
+    calmActive=false
+    if(calmAnimFrame){cancelAnimationFrame(calmAnimFrame);calmAnimFrame=null}
+    const ball=document.getElementById('calmDemoBall')
+    if(ball){
+      ball.style.width='48px';ball.style.height='48px'
+      ball.style.background='radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%)'
+      ball.style.boxShadow='0 0 10px 4px rgba(100,180,255,0.9),0 0 24px 8px rgba(80,150,255,0.6),0 0 44px 13px rgba(60,120,255,0.3)'
+    }
+    const statusDot=document.getElementById('calmStatusDot')
+    const statusText=document.getElementById('calmStatusText')
+    const breathLabel=document.getElementById('calmBreathLabel')
+    const timerEl=document.getElementById('calmTimer')
+    if(statusDot)statusDot.style.background='var(--text-muted)'
+    if(statusText){statusText.style.color='var(--text-muted)';statusText.textContent='INACTIVE'}
+    if(breathLabel){breathLabel.style.opacity='0';breathLabel.textContent='BREATHE IN'}
+    if(timerEl)timerEl.style.display='none'
+    document.getElementById('calmBreathBar').style.width='0%'
+    calmBreathPulse=0;calmBreathIn=true;calmBallPos=8;calmBallDir=1
+  }
+
+  // Init calm ball
+  ;(function(){
+    const ball=document.getElementById('calmDemoBall')
+    if(!ball)return
+    ball.style.width='48px';ball.style.height='48px'
+    ball.style.background='radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%)'
+    ball.style.boxShadow='0 0 10px 4px rgba(100,180,255,0.9),0 0 24px 8px rgba(80,150,255,0.6),0 0 44px 13px rgba(60,120,255,0.3)'
+  })()
 </script>
 </body>
 </html>
