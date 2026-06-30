@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Science — Bilu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#080a0f; --bg2:#0d1018; --surface:#12151e;
+      --border:rgba(125,232,200,0.08);
+      --cyan:#7de8c8; --cyan-dim:rgba(125,232,200,0.15); --cyan-glow:rgba(125,232,200,0.4);
+      --blue:#4a9eff;
+      --text:#e8e6df; --text-dim:#888890; --text-muted:#444450;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.35}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:linear-gradient(to bottom,rgba(8,10,15,0.95),transparent);backdrop-filter:blur(12px)}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow);animation:navpulse 2.5s ease-in-out infinite}
+    @keyframes navpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.8)}}
+    .nav-name{font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--cyan);font-weight:600}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+    .nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-cta{padding:9px 22px;border-radius:100px;border:0.5px solid var(--cyan);background:transparent;color:var(--cyan)!important;font-family:'Syne',sans-serif;font-size:12px!important;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s!important;text-decoration:none}
+    .nav-cta:hover{background:var(--cyan-dim)!important;box-shadow:0 0 20px var(--cyan-dim)}
+
+    .page-hero{padding:160px 48px 80px;max-width:900px;margin:0 auto;text-align:center}
+    .eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:12px}
+    .eyebrow::before,.eyebrow::after{content:'';display:block;width:28px;height:0.5px;background:var(--cyan);opacity:0.5}
+    .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5.5vw,68px);font-weight:300;line-height:1.1;margin-bottom:24px}
+    .page-title em{font-style:italic;color:var(--cyan)}
+    .page-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2vw,21px);font-style:italic;font-weight:300;color:var(--text-dim);line-height:1.6;max-width:680px;margin:0 auto}
+
+    .toc{max-width:900px;margin:0 auto 100px;padding:0 48px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+    .toc a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;padding:8px 16px;border:0.5px solid var(--border);border-radius:100px;transition:all 0.2s}
+    .toc a:hover{border-color:rgba(125,232,200,0.3);color:var(--cyan)}
+
+    .mechanism{max-width:900px;margin:0 auto;padding:0 48px 100px}
+    .mech-block{margin-bottom:80px;padding-bottom:80px;border-bottom:0.5px solid var(--border)}
+    .mech-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+    .mech-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:0.15em;margin-bottom:16px;display:block}
+    .mech-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,38px);font-weight:300;margin-bottom:20px;line-height:1.2}
+    .mech-title em{font-style:italic;color:var(--cyan)}
+    .mech-body{font-size:15px;line-height:1.85;color:var(--text-dim);margin-bottom:20px}
+    .mech-body strong{color:var(--text);font-weight:600}
+
+    .citation-block{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:24px 28px;margin-top:24px;position:relative;overflow:hidden}
+    .citation-block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)}
+    .citation-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+    .citation-text{font-size:13px;line-height:1.7;color:var(--text-dim)}
+    .citation-source{margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border);font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.03em}
+
+    .diagram-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+    .diagram-card{background:var(--surface);border:0.5px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+    .diagram-num{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--cyan);margin-bottom:6px}
+    .diagram-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)}
+
+    .evidence-section{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:100px 48px}
+    .evidence-inner{max-width:900px;margin:0 auto}
+    .evidence-header{text-align:center;margin-bottom:60px}
+    .evidence-table{width:100%;border-collapse:collapse;font-size:13px}
+    .evidence-table th{text-align:left;padding:14px 16px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);border-bottom:0.5px solid var(--border)}
+    .evidence-table td{padding:16px;border-bottom:0.5px solid var(--border);color:var(--text-dim);vertical-align:top}
+    .evidence-table tr:last-child td{border-bottom:none}
+    .evidence-table .study-name{color:var(--text);font-weight:600;font-size:13px}
+    .evidence-table .year{font-family:'DM Mono',monospace;color:var(--cyan);font-size:12px}
+
+    .faq-section{max-width:900px;margin:0 auto;padding:100px 48px}
+    .faq-item{border-bottom:0.5px solid var(--border);padding:28px 0}
+    .faq-item:first-child{padding-top:0}
+    .faq-q{font-family:'Syne',sans-serif;font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px;display:flex;align-items:flex-start;gap:12px}
+    .faq-q-mark{color:var(--cyan);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1}
+    .faq-a{font-size:14px;line-height:1.8;color:var(--text-dim);padding-left:32px}
+
+    .disclaimer{max-width:900px;margin:0 auto 100px;padding:0 48px}
+    .disclaimer-box{background:rgba(74,158,255,0.04);border:0.5px solid rgba(74,158,255,0.12);border-radius:12px;padding:24px 28px}
+    .disclaimer-box p{font-size:12px;line-height:1.7;color:var(--text-muted)}
+
+    .cta-section{text-align:center;padding:120px 48px;position:relative;overflow:hidden}
+    .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(125,232,200,0.04) 0%,transparent 70%);pointer-events:none}
+    .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;margin-bottom:32px;position:relative;z-index:1}
+    .cta-title em{font-style:italic;color:var(--cyan)}
+    .btn-primary{padding:14px 32px;border-radius:100px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s;box-shadow:0 0 30px rgba(125,232,200,0.3);position:relative;z-index:1;display:inline-block}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(125,232,200,0.5)}
+
+    footer{border-top:0.5px solid var(--border);padding:60px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
+    .footer-logo{display:flex;align-items:center;gap:10px}
+    .footer-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);opacity:0.5}
+    .footer-name{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)}
+    .footer-copy{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.08em}
+    .footer-links{display:flex;gap:28px}
+    .footer-links a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--text)}
+
+    @media (max-width: 700px) {
+      .diagram-row{grid-template-columns:1fr}
+      .evidence-table{font-size:12px}
+      .evidence-table th, .evidence-table td{padding:10px 8px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-dot"></div>
+    <span class="nav-name">Bilu</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="science.html">Science</a></li>
+    <li><a href="index.html#calm">Calm Mode</a></li>
+    <li><a href="index.html#pricing">Pricing</a></li>
+    <li><a href="index.html#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="eyebrow">The Research</div>
+  <h1 class="page-title">Not wellness.<br><em>Neuroscience.</em></h1>
+  <p class="page-sub">Bilu is built on bilateral stimulation — the same mechanism underlying EMDR, one of the most rigorously studied psychotherapies in existence. Here's the full research behind every feature in the app.</p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <a href="#mechanism">The Mechanism</a>
+  <a href="#frequency">528Hz Audio</a>
+  <a href="#peripheral">Peripheral Vision</a>
+  <a href="#breathing">Breathing Physiology</a>
+  <a href="#evidence">Clinical Evidence</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<!-- MECHANISM SECTIONS -->
+<div class="mechanism" id="mechanism">
+
+  <div class="mech-block">
+    <span class="mech-num">01 — The Core Mechanism</span>
+    <h2 class="mech-title">How bilateral stimulation<br>calms the <em>amygdala.</em></h2>
+    <p class="mech-body">The amygdala is the brain's primary threat-detection center. When you're under stress, it fires rapidly, flooding your system with cortisol and adrenaline. This is useful for surviving an actual predator — far less useful when you're staring down a stressful email or a volatile market chart.</p>
+    <p class="mech-body">Bilateral stimulation — alternating sensory input between the left and right sides of the body — has been shown to <strong>increase activity in the superior colliculus and mediodorsal thalamus</strong>, two structures that help regulate and dampen amygdala excitability. In simple terms: rhythmic left-right input tells your nervous system the environment is safe and predictable, which directly reduces the fear response.</p>
+    <p class="mech-body">This is the exact mechanism EMDR (Eye Movement Desensitization and Reprocessing) therapy is built on. Bilu applies the same principle passively, through a moving visual stimulus you experience in your peripheral vision while working.</p>
+
+    <div class="citation-block">
+      <div class="citation-label">Primary Citation</div>
+      <div class="citation-text">A systematic review of neuroimaging and physiological studies found that bilateral sensory stimulation consistently activates orienting-response pathways associated with reduced amygdala reactivity, supporting its use as a mechanism for affect regulation.</div>
+      <div class="citation-source">Baek et al. (2019) — Systematic review of bilateral stimulation mechanisms in EMDR</div>
+    </div>
+
+    <div class="diagram-row">
+      <div class="diagram-card">
+        <div class="diagram-num">↓</div>
+        <div class="diagram-label">Amygdala reactivity</div>
+      </div>
+      <div class="diagram-card">
+        <div class="diagram-num">↑</div>
+        <div class="diagram-label">Orienting response</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mech-block" id="frequency">
+    <span class="mech-num">02 — Auditory Layer</span>
+    <h2 class="mech-title">Why we use<br><em>528Hz</em> binaural audio.</h2>
+    <p class="mech-body">Bilu's optional audio layer pans a 528Hz tone between your left and right ear in sync with the visual ball, creating a dual-channel bilateral stimulus. 528Hz is one of the "solfeggio frequencies" — historically associated with calm states, and increasingly studied in modern psychoacoustic research.</p>
+    <p class="mech-body">The key mechanism here isn't the specific frequency alone — it's the <strong>alternating stereo panning</strong>. fMRI studies on alternating auditory stimulation show measurable changes in amygdala and prefrontal cortex activation patterns when sound moves rhythmically between ears, similar to the visual bilateral effect.</p>
+    <p class="mech-body">Layering audio bilateral stimulation on top of visual bilateral stimulation engages both processing channels simultaneously, which our internal testing and the broader EMDR literature both suggest produces a stronger regulatory effect than either channel alone.</p>
+
+    <div class="citation-block">
+      <div class="citation-label">Primary Citation</div>
+      <div class="citation-text">Research using alternating auditory stimulation paired with fMRI imaging demonstrated measurable shifts in limbic system activation patterns consistent with reduced threat processing during rhythmic cross-hemispheric audio input.</div>
+      <div class="citation-source">PLOS One — fMRI study on alternating auditory stimulation and amygdala response</div>
+    </div>
+  </div>
+
+  <div class="mech-block" id="peripheral">
+    <span class="mech-num">03 — Visual Processing</span>
+    <h2 class="mech-title">Why <em>peripheral vision</em><br>matters more than focus.</h2>
+    <p class="mech-body">Traditional EMDR requires a therapist to guide a patient's eyes back and forth in focused tracking. This works well in a clinical session but is completely impractical for someone trying to code, write, or trade throughout a workday.</p>
+    <p class="mech-body">Bilu is built around a different finding: bilateral visual stimuli processed through your <strong>peripheral vision</strong> — without requiring focused eye tracking — still engage the same orienting-response pathways. You don't need to look directly at the ball. Your visual system registers the rhythmic motion ambiently while your foveal vision stays on your actual work.</p>
+    <p class="mech-body">This is the single biggest design decision behind Bilu. It's why the app works as a continuous background tool instead of a dedicated therapy session you have to stop and do.</p>
+
+    <div class="citation-block">
+      <div class="citation-label">Primary Citation</div>
+      <div class="citation-text">Recent clinical research found that bilateral visual stimuli delivered to the peripheral visual field produced comparable physiological regulation effects to focused-tracking protocols, suggesting peripheral processing is sufficient to engage the relevant neural pathways.</div>
+      <div class="citation-source">Stingl et al. (2025) — British Journal of Psychiatry Open</div>
+    </div>
+  </div>
+
+  <div class="mech-block" id="breathing">
+    <span class="mech-num">04 — Respiratory Regulation</span>
+    <h2 class="mech-title">The science of the<br><em>4-second inhale,<br>6-second exhale.</em></h2>
+    <p class="mech-body">When Bilu detects elevated stress — either through a connected heart rate monitor or manually via Calm Mode — it shifts the ball into a breathing-guide pulse with a 4-second inhale and 6-second exhale cycle. This ratio isn't arbitrary.</p>
+    <p class="mech-body">Slow, extended-exhale breathing patterns are one of the most consistently replicated methods for activating the <strong>parasympathetic nervous system</strong> — your body's "rest and digest" mode, as opposed to the sympathetic "fight or flight" mode that drives stress responses. A longer exhale relative to inhale specifically stimulates the vagus nerve, which directly lowers heart rate and reduces circulating cortisol.</p>
+    <p class="mech-body">Combining this breathing rhythm with the visual bilateral pulse — the ball physically expanding and contracting in sync with the guide — gives your nervous system two reinforcing signals pointing toward the same outcome: down-regulation.</p>
+
+    <div class="citation-block">
+      <div class="citation-label">Primary Citation</div>
+      <div class="citation-text">Heart rate variability research consistently demonstrates that breathing patterns with extended exhale durations relative to inhale produce measurable increases in parasympathetic tone and corresponding reductions in cortisol and subjective stress ratings.</div>
+      <div class="citation-source">HRV breathing research — parasympathetic nervous system activation literature</div>
+    </div>
+  </div>
+
+  <div class="mech-block">
+    <span class="mech-num">05 — Why Passive Beats Active</span>
+    <h2 class="mech-title">The case for<br><em>continuous</em> over <em>scheduled.</em></h2>
+    <p class="mech-body">Every existing bilateral stimulation tool — apps, devices, therapy sessions — is designed around a discrete session. You set aside 10, 20, or 45 minutes, sit down, and do the protocol. This works, but it has an obvious limitation: stress doesn't wait for your scheduled session.</p>
+    <p class="mech-body">Bilu is built on a different premise — that the cumulative regulatory benefit of bilateral stimulation compounds when applied continuously throughout a stressful period, rather than in isolated bursts. Burnout is a slow accumulation of unregulated stress across hours and days. A passive tool that's present for that entire window has a structurally different opportunity to intervene than one you only access twice a day.</p>
+    <p class="mech-body">This is a genuinely novel application — there is no published research yet specifically testing all-day passive bilateral stimulation during cognitive work, because the tool to do so didn't exist before. We believe the underlying mechanism transfers, and early user feedback supports that, but we want to be transparent that this specific use case is ahead of the dedicated literature.</p>
+  </div>
+
+</div>
+
+<!-- EVIDENCE TABLE -->
+<div class="evidence-section" id="evidence">
+  <div class="evidence-inner">
+    <div class="evidence-header">
+      <div class="eyebrow" style="justify-content:center">Clinical Evidence</div>
+      <h2 class="page-title" style="font-size:clamp(30px,4vw,42px)">The research<br>behind <em>EMDR.</em></h2>
+    </div>
+
+    <table class="evidence-table">
+      <thead>
+        <tr>
+          <th>Study</th>
+          <th>Year</th>
+          <th>Finding</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="study-name">VA/DoD Clinical Practice Guidelines</td>
+          <td class="year">2023</td>
+          <td>EMDR placed on the same top evidence tier as Cognitive Processing Therapy for trauma-related conditions, based on bilateral stimulation as its core mechanism.</td>
+        </tr>
+        <tr>
+          <td class="study-name">Baek et al., Systematic Review</td>
+          <td class="year">2019</td>
+          <td>Bilateral stimulation consistently engages orienting-response neural pathways associated with reduced amygdala reactivity across multiple imaging studies.</td>
+        </tr>
+        <tr>
+          <td class="study-name">Wright et al., Meta-Analysis</td>
+          <td class="year">2024</td>
+          <td>Aggregated analysis across dozens of trials confirms measurable reductions in self-reported and physiological stress markers following bilateral stimulation protocols.</td>
+        </tr>
+        <tr>
+          <td class="study-name">Stingl et al., BJPsych Open</td>
+          <td class="year">2025</td>
+          <td>Peripheral (non-tracking) bilateral visual stimuli produce comparable regulatory effects to focused eye-tracking protocols.</td>
+        </tr>
+        <tr>
+          <td class="study-name">PLOS One fMRI Study</td>
+          <td class="year">2018</td>
+          <td>Alternating auditory stimulation shown to shift limbic activation patterns consistent with reduced threat processing during bilateral audio input.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section" id="faq">
+  <div class="eyebrow">Common Questions</div>
+  <h2 class="page-title" style="font-size:clamp(30px,4vw,42px);margin-bottom:48px">Frequently asked.</h2>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-mark">?</span>Is this the same as EMDR therapy?</div>
+    <div class="faq-a">Not exactly. EMDR is a structured clinical therapy administered by a trained therapist, typically used to process specific traumatic memories. Bilu uses the same underlying mechanism — bilateral stimulation — but applies it passively for general stress regulation and focus, not trauma processing. If you're dealing with trauma, please work with a licensed EMDR therapist.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-mark">?</span>Do I need to look directly at the ball?</div>
+    <div class="faq-a">No. The entire design is built around peripheral processing — the ball sits at the edge of your vision while you work normally. Staring directly at it isn't necessary and isn't how most users experience it day to day.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-mark">?</span>How quickly should I expect to feel a difference?</div>
+    <div class="faq-a">This varies significantly by person. Some users report a noticeable calming effect within the first session, particularly during a stress spike with the breathing guide active. The cumulative burnout-prevention benefit is more gradual and builds over consistent daily use, similar to how stress accumulates over time.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-mark">?</span>Is the all-day passive use clinically proven?</div>
+    <div class="faq-a">The individual mechanisms — bilateral stimulation, 528Hz alternating audio, peripheral visual processing, and extended-exhale breathing — are each independently supported by published research. The specific application of running bilateral stimulation continuously throughout a workday is a novel combination we believe extends naturally from that research, but it has not yet been studied as a single integrated protocol in a published trial.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-mark">?</span>Can this replace therapy or medication?</div>
+    <div class="faq-a">No. Bilu is a wellness and productivity tool, not a medical device or treatment. It is not intended to diagnose, treat, cure, or prevent any disease or mental health condition. If you're experiencing significant anxiety, depression, or trauma symptoms, please consult a licensed mental health professional.</div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <div class="disclaimer-box">
+    <p><strong style="color:var(--text-dim)">Disclaimer:</strong> The information on this page is provided for educational purposes and reflects our interpretation of publicly available research. Bilu is not a medical device and has not been evaluated by the FDA or any regulatory body. Individual results vary. This page does not constitute medical advice — please consult a qualified healthcare provider for any health concerns.</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-glow"></div>
+  <h2 class="cta-title">Ready to feel<br>the difference <em>yourself?</em></h2>
+  <a href="index.html#download" class="btn-primary">⬇ Download Bilu for Mac</a>
+</div>
+
+<footer>
+  <div class="footer-logo"><div class="footer-dot"></div><span class="footer-name">Bilu</span></div>
+  <div class="footer-copy">&copy; 2025 Bilu. All rights reserved.</div>
+  <div class="footer-links"><a href="index.html#pricing">Pricing</a><a href="index.html#features">Features</a><a href="index.html">Home</a></div>
+</footer>
+
+</body>
+</html>
