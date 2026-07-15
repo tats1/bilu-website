@@ -155,6 +155,36 @@
     /* Lifetime pricing urgency banner */
     .lifetime-banner{max-width:800px;margin:0 auto 32px;padding:14px 24px;background:rgba(240,192,64,0.08);border:0.5px solid rgba(240,192,64,0.3);border-radius:100px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.05em;color:var(--amber);text-align:center}
     .lifetime-note{margin-top:16px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.06em;line-height:1.6}
+
+    /* ── Mobile responsiveness ─────────────────────────── */
+    @media (max-width: 900px) {
+      section, .hr-section { padding: 80px 24px; }
+      .how-grid, .hr-section, .cta-section { grid-template-columns: 1fr; gap: 40px; }
+      div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature:nth-child(3n) { border-right: 0.5px solid var(--border); }
+      .feature:nth-child(2n) { border-right: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonials { padding: 60px 24px; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+      .nav-links li:not(:last-child) { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .stats-bar { flex-wrap: wrap; padding: 24px; }
+      .stat { flex: 1 1 45%; padding: 16px 8px; border-right: none; border-bottom: 0.5px solid var(--border); }
+      section { padding: 60px 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature { border-right: none !important; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; gap: 20px; }
+      .pricing-card { padding: 32px 24px; }
+      .billing-toggle { flex-wrap: wrap; justify-content: center; }
+      .billing-toggle-btn { padding: 8px 14px; font-size: 11px; }
+      .cta-section { padding: 100px 24px; }
+      .install-warning { max-width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -572,7 +602,7 @@
         <li>Full size &amp; speed control</li>
         <li>All future updates</li>
       </ul>
-      <a href="https://bilu.lemonsqueezy.com/checkout/buy/a8383a65-c686-4229-9484-3d9bf5fae036" id="checkoutBtn" class="pricing-btn pro">Get Pro — $5.99/mo</a>
+      <a href="https://bilu.lemonsqueezy.com/checkout/buy/REPLACE-WITH-MONTHLY-VARIANT-ID" id="checkoutBtn" class="pricing-btn pro">Get Pro — $5.99/mo</a>
       <div class="lifetime-note" id="billingNote">Billed monthly. Cancel anytime.</div>
     </div>
   </div>
@@ -580,8 +610,8 @@
 
 <script>
   const CHECKOUT_URLS = {
-    monthly: 'https://bilu.lemonsqueezy.com/checkout/buy/a8383a65-c686-4229-9484-3d9bf5fae036',
-    yearly: 'https://bilu.lemonsqueezy.com/checkout/buy/be9d6786-beda-4923-9f5c-9ca2a0ed7162',
+    monthly: 'https://bilu.lemonsqueezy.com/checkout/buy/REPLACE-WITH-MONTHLY-VARIANT-ID',
+    yearly: 'https://bilu.lemonsqueezy.com/checkout/buy/REPLACE-WITH-YEARLY-VARIANT-ID',
     lifetime: 'https://bilu.lemonsqueezy.com/checkout/buy/4d1b65c4-4361-4678-a3ef-e3a1660a2515'
   }
 
