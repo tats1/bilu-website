@@ -524,10 +524,12 @@
 <section id="pricing" style="text-align:center">
   <div class="section-eyebrow" style="justify-content:center">Pricing</div>
   <h2 class="section-title">Simple, honest pricing.</h2>
-  <p class="section-body" style="margin:0 auto 28px;text-align:center">Try it free. Unlock everything with a one-time purchase — no subscription, no recurring charges, ever.</p>
+  <p class="section-body" style="margin:0 auto 28px;text-align:center">Try it free. Upgrade anytime — cancel whenever you want, or go lifetime and never think about it again.</p>
 
-  <div class="lifetime-banner">
-    ⏳ Lifetime pricing is limited. Bilu is moving to a subscription model soon — buy now and Pro stays yours forever, no recurring charges.
+  <div class="billing-toggle" style="display:inline-flex;align-items:center;gap:4px;margin-bottom:32px;padding:6px;border-radius:999px;background:var(--surface);border:0.5px solid var(--border)">
+    <button id="toggleMonthly" class="billing-toggle-btn active" onclick="setBilling('monthly')" style="border:none;background:transparent;color:var(--text-dim);padding:8px 18px;border-radius:999px;font-family:'Syne',sans-serif;font-size:12px;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s">Monthly</button>
+    <button id="toggleYearly" class="billing-toggle-btn" onclick="setBilling('yearly')" style="border:none;background:transparent;color:var(--text-dim);padding:8px 18px;border-radius:999px;font-family:'Syne',sans-serif;font-size:12px;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s">Yearly</button>
+    <button id="toggleLifetime" class="billing-toggle-btn" onclick="setBilling('lifetime')" style="border:none;background:transparent;color:var(--text-dim);padding:8px 18px;border-radius:999px;font-family:'Syne',sans-serif;font-size:12px;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s">Lifetime</button>
   </div>
 
   <div class="pricing-grid">
@@ -555,10 +557,10 @@
       </div>
     </div>
     <div class="pricing-card featured reveal">
-      <div class="pricing-badge">Most Popular · Limited-Time Lifetime Price</div>
+      <div class="pricing-badge" id="pricingBadge">Most Popular</div>
       <div class="pricing-tier">Pro</div>
-      <div class="pricing-price"><sup>$</sup>24<span style="font-size:28px">.99</span></div>
-      <div class="pricing-period">one-time purchase</div>
+      <div class="pricing-price" id="priceDisplay"><sup>$</sup>5<span style="font-size:28px">.99</span></div>
+      <div class="pricing-period" id="periodDisplay">per month</div>
       <ul class="pricing-features">
         <li>Everything in Free</li>
         <li>Binaural 528Hz panning</li>
@@ -570,11 +572,63 @@
         <li>Full size &amp; speed control</li>
         <li>All future updates</li>
       </ul>
-      <a href="https://bilu.lemonsqueezy.com/checkout/buy/4d1b65c4-4361-4678-a3ef-e3a1660a2515" class="pricing-btn pro">Get Pro — $24.99</a>
-      <div class="lifetime-note">Locks in lifetime access at today's price. Future purchases will move to a subscription plan.</div>
+      <a href="https://bilu.lemonsqueezy.com/checkout/buy/REPLACE-WITH-MONTHLY-VARIANT-ID" id="checkoutBtn" class="pricing-btn pro">Get Pro — $5.99/mo</a>
+      <div class="lifetime-note" id="billingNote">Billed monthly. Cancel anytime.</div>
     </div>
   </div>
 </section>
+
+<script>
+  const CHECKOUT_URLS = {
+    monthly: 'https://bilu.lemonsqueezy.com/checkout/buy/REPLACE-WITH-MONTHLY-VARIANT-ID',
+    yearly: 'https://bilu.lemonsqueezy.com/checkout/buy/REPLACE-WITH-YEARLY-VARIANT-ID',
+    lifetime: 'https://bilu.lemonsqueezy.com/checkout/buy/4d1b65c4-4361-4678-a3ef-e3a1660a2515'
+  }
+
+  function setBilling(period) {
+    const priceDisplay = document.getElementById('priceDisplay')
+    const periodDisplay = document.getElementById('periodDisplay')
+    const checkoutBtn = document.getElementById('checkoutBtn')
+    const billingNote = document.getElementById('billingNote')
+    const pricingBadge = document.getElementById('pricingBadge')
+    const buttons = {
+      monthly: document.getElementById('toggleMonthly'),
+      yearly: document.getElementById('toggleYearly'),
+      lifetime: document.getElementById('toggleLifetime')
+    }
+
+    Object.keys(buttons).forEach(key => buttons[key].classList.toggle('active', key === period))
+
+    if (period === 'monthly') {
+      priceDisplay.innerHTML = '<sup>$</sup>5<span style="font-size:28px">.99</span>'
+      periodDisplay.textContent = 'per month'
+      checkoutBtn.textContent = 'Get Pro — $5.99/mo'
+      checkoutBtn.href = CHECKOUT_URLS.monthly
+      billingNote.textContent = 'Billed monthly. Cancel anytime.'
+      pricingBadge.textContent = 'Most Popular'
+    } else if (period === 'yearly') {
+      priceDisplay.innerHTML = '<sup>$</sup>19<span style="font-size:28px">.99</span>'
+      periodDisplay.textContent = 'per year'
+      checkoutBtn.textContent = 'Get Pro — $19.99/yr'
+      checkoutBtn.href = CHECKOUT_URLS.yearly
+      billingNote.textContent = 'Billed annually. Cancel anytime.'
+      pricingBadge.textContent = 'Best Value'
+    } else {
+      priceDisplay.innerHTML = '<sup>$</sup>49<span style="font-size:28px">.99</span>'
+      periodDisplay.textContent = 'one-time purchase'
+      checkoutBtn.textContent = 'Get Pro — $49.99'
+      checkoutBtn.href = CHECKOUT_URLS.lifetime
+      billingNote.textContent = 'Pay once. Yours forever.'
+      pricingBadge.textContent = 'Pay Once'
+    }
+  }
+
+  const billingToggleStyle = document.createElement('style')
+  billingToggleStyle.textContent = `
+    .billing-toggle-btn.active { background: var(--surface, #ffffff); box-shadow: 0 1px 2px rgba(0,0,0,0.08); color: var(--cyan) !important; font-weight: 600; }
+  `
+  document.head.appendChild(billingToggleStyle)
+</script>
 
 <!-- CTA -->
 <div class="cta-section" id="download">
