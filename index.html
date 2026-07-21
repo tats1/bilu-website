@@ -73,6 +73,16 @@
     @keyframes howball{0%{left:6%;box-shadow:0 0 10px 4px rgba(100,180,255,0.99),0 0 26px 8px rgba(80,150,255,0.7),0 0 50px 14px rgba(60,120,255,0.4)}100%{left:88%;box-shadow:0 0 10px 4px rgba(100,180,255,0.99),0 0 26px 8px rgba(80,150,255,0.7),0 0 50px 14px rgba(60,120,255,0.4)}}
     .how-visual-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
     .how-cursor{position:absolute;width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);top:58%;animation:cursor 5s ease-in-out infinite}
+
+    /* Demo video player */
+    .demo-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .demo-controls{position:absolute;left:12px;right:12px;bottom:12px;display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(8,10,15,0.75);backdrop-filter:blur(8px);border:0.5px solid var(--border);border-radius:100px;opacity:0;transition:opacity 0.25s ease}
+    .how-visual:hover .demo-controls,.how-visual.controls-visible .demo-controls{opacity:1}
+    .demo-btn{background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:13px;padding:2px 4px;display:flex;align-items:center;justify-content:center;transition:color 0.2s}
+    .demo-btn:hover{color:var(--cyan)}
+    .demo-progress-wrap{flex:1;height:3px;background:rgba(255,255,255,0.12);border-radius:2px;cursor:pointer;position:relative}
+    .demo-progress-bar{height:100%;width:0%;background:var(--cyan);border-radius:2px}
+    .demo-time{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);min-width:32px;text-align:right}
     @keyframes cursor{0%{left:38%;opacity:0.4}40%{left:52%;opacity:0.7}70%{left:32%;opacity:0.4}100%{left:38%;opacity:0.4}}
     .testimonials{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:100px 48px}
     .testimonials-inner{max-width:1200px;margin:0 auto}
@@ -276,11 +286,19 @@
         <div class="step-content"><h3>Heart rate guides the response</h3><p>When stress spikes are detected, the orb shifts to a breathing-guide pulse — expanding and contracting to coach your nervous system back to baseline without stopping work.</p></div>
       </div>
     </div>
-    <div class="how-visual">
-      <div class="how-visual-bg"></div>
-      <div class="how-ball-wrap"><div class="how-ball"></div></div>
-      <div class="how-cursor"></div>
-      <div class="how-visual-label">Mouse avoidance — ball never blocks your work</div>
+    <div class="how-visual" id="howVisual">
+      <video class="demo-video" id="demoVideo" muted loop playsinline preload="metadata" poster="assets/demo-poster.jpg">
+        <source src="assets/demo.mp4" type="video/mp4">
+      </video>
+      <div class="demo-controls">
+        <button class="demo-btn" id="demoPlayBtn" onclick="toggleDemoPlay()">▶</button>
+        <div class="demo-progress-wrap" id="demoProgressWrap" onclick="seekDemo(event)">
+          <div class="demo-progress-bar" id="demoProgressBar"></div>
+        </div>
+        <span class="demo-time" id="demoTime">0:00</span>
+        <button class="demo-btn" id="demoMuteBtn" onclick="toggleDemoMute()">🔇</button>
+        <button class="demo-btn" onclick="toggleDemoFullscreen()">⛶</button>
+      </div>
     </div>
   </div>
 </section>
@@ -611,7 +629,7 @@
 <script>
   const CHECKOUT_URLS = {
     monthly: 'https://bilu.lemonsqueezy.com/checkout/buy/a8383a65-c686-4229-9484-3d9bf5fae036',
-    yearly: 'https://bilu.lemonsqueezy.com/checkout/buy/https://bilu.lemonsqueezy.com/checkout/buy/be9d6786-beda-4923-9f5c-9ca2a0ed7162',
+    yearly: 'https://bilu.lemonsqueezy.com/checkout/buy/be9d6786-beda-4923-9f5c-9ca2a0ed7162',
     lifetime: 'https://bilu.lemonsqueezy.com/checkout/buy/4d1b65c4-4361-4678-a3ef-e3a1660a2515'
   }
 
@@ -840,6 +858,61 @@
     ball.style.width='48px';ball.style.height='48px'
     ball.style.background='radial-gradient(circle at center,rgba(0,10,40,0.5) 0%,rgba(20,60,180,0.3) 30%,rgba(80,160,255,0.6) 58%,rgba(140,210,255,0.9) 74%,rgba(200,235,255,1.0) 87%,rgba(255,255,255,0.6) 100%)'
     ball.style.boxShadow='0 0 10px 4px rgba(100,180,255,0.9),0 0 24px 8px rgba(80,150,255,0.6),0 0 44px 13px rgba(60,120,255,0.3)'
+  })()
+</script>
+
+<script>
+  /* ── Demo video player (How It Works section) ─────────── */
+  ;(function(){
+    const video = document.getElementById('demoVideo')
+    if (!video) return
+    const playBtn = document.getElementById('demoPlayBtn')
+    const muteBtn = document.getElementById('demoMuteBtn')
+    const progressWrap = document.getElementById('demoProgressWrap')
+    const progressBar = document.getElementById('demoProgressBar')
+    const timeEl = document.getElementById('demoTime')
+
+    window.toggleDemoPlay = function () {
+      if (video.paused) { video.play() } else { video.pause() }
+    }
+    window.toggleDemoMute = function () {
+      video.muted = !video.muted
+      muteBtn.textContent = video.muted ? '🔇' : '🔊'
+    }
+    window.toggleDemoFullscreen = function () {
+      if (video.requestFullscreen) video.requestFullscreen()
+    }
+    window.seekDemo = function (e) {
+      const rect = progressWrap.getBoundingClientRect()
+      const pct = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width))
+      if (video.duration) video.currentTime = pct * video.duration
+    }
+
+    video.addEventListener('timeupdate', () => {
+      if (!video.duration) return
+      const pct = (video.currentTime / video.duration) * 100
+      progressBar.style.width = pct + '%'
+      const mins = Math.floor(video.currentTime / 60)
+      const secs = Math.floor(video.currentTime % 60)
+      timeEl.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs
+    })
+    video.addEventListener('play',  () => { playBtn.textContent = '❚❚' })
+    video.addEventListener('pause', () => { playBtn.textContent = '▶' })
+
+    // Autoplay muted when scrolled into view, pause when scrolled away —
+    // matches the same pattern as the .reveal fade-ins above.
+    const demoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          video.muted = true
+          muteBtn.textContent = '🔇'
+          video.play().catch(() => {}) // ignore autoplay-blocked errors
+        } else {
+          video.pause()
+        }
+      })
+    }, { threshold: 0.4 })
+    demoObserver.observe(video)
   })()
 </script>
 </body>
