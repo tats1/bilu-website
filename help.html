@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bilu — Help & FAQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#080a0f; --bg2:#0d1018; --surface:#12151e;
+      --border:rgba(125,232,200,0.08);
+      --cyan:#7de8c8; --cyan-dim:rgba(125,232,200,0.15); --cyan-glow:rgba(125,232,200,0.4);
+      --blue:#4a9eff; --blue-dim:rgba(74,158,255,0.15);
+      --amber:#f0c040; --red:#ff6b6b;
+      --text:#e8e6df; --text-dim:#888890; --text-muted:#444450;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.35}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:linear-gradient(to bottom,rgba(8,10,15,0.95),transparent);backdrop-filter:blur(12px)}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow);animation:navpulse 2.5s ease-in-out infinite}
+    @keyframes navpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.8)}}
+    .nav-name{font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--cyan);font-weight:600}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+    .nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-cta{padding:9px 22px;border-radius:100px;border:0.5px solid var(--cyan);background:transparent;color:var(--cyan)!important;font-family:'Syne',sans-serif;font-size:12px!important;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s!important;text-decoration:none}
+    .nav-cta:hover{background:var(--cyan-dim)!important;box-shadow:0 0 20px var(--cyan-dim)}
+
+    .page-hero{min-height:52vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:140px 48px 80px;text-align:center}
+    .hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(74,158,255,0.06) 0%,rgba(125,232,200,0.04) 40%,transparent 70%);pointer-events:none;animation:herobreath 6s ease-in-out infinite}
+    @keyframes herobreath{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.1);opacity:0.7}}
+    .hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+    .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:32px;height:0.5px;background:var(--cyan);opacity:0.5}
+    .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6vw,76px);font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:16px}
+    .page-title em{font-style:italic;color:var(--cyan)}
+    .page-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2vw,22px);font-weight:300;font-style:italic;color:var(--text-dim);max-width:560px;line-height:1.5}
+
+    section{padding:70px 48px;max-width:920px;margin:0 auto}
+    .section-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+    .section-eyebrow::before{content:'';display:block;width:24px;height:0.5px;background:var(--cyan)}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,3.4vw,44px);font-weight:300;line-height:1.15;color:var(--text);margin-bottom:16px}
+    .section-title em{font-style:italic;color:var(--cyan)}
+    .section-body{font-size:15px;line-height:1.8;color:var(--text-dim);max-width:680px}
+
+    .faq-group{margin-top:32px;display:flex;flex-direction:column;gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:16px;overflow:hidden}
+    .faq-item{background:var(--surface)}
+    .faq-question{width:100%;text-align:left;padding:24px 28px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--text);transition:background 0.2s}
+    .faq-question:hover{background:#161920}
+    .faq-icon{font-family:'DM Mono',monospace;font-size:16px;color:var(--cyan);min-width:20px;text-align:center;transition:transform 0.25s ease}
+    .faq-item.open .faq-icon{transform:rotate(45deg)}
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+    .faq-item.open .faq-answer{max-height:600px}
+    .faq-answer-inner{padding:0 28px 26px;font-size:14px;line-height:1.85;color:var(--text-dim)}
+    .faq-answer-inner a{color:var(--cyan);text-decoration:none;border-bottom:0.5px solid rgba(125,232,200,0.3)}
+    .faq-answer-inner a:hover{border-bottom-color:var(--cyan)}
+    .faq-answer-inner code{background:rgba(0,0,0,0.4);padding:2px 8px;border-radius:6px;font-family:'DM Mono',monospace;font-size:13px;color:var(--cyan);border:0.5px solid rgba(125,232,200,0.2)}
+    .faq-answer-inner ul{margin:12px 0 0 20px}
+    .faq-answer-inner li{margin-bottom:6px}
+
+    .callout{margin-top:16px;padding:16px 20px;border-radius:12px;font-size:13px;line-height:1.7}
+    .callout.blue{background:rgba(74,158,255,0.05);border:0.5px solid rgba(74,158,255,0.14);color:var(--text-dim)}
+    .callout.blue strong{color:var(--text)}
+    .callout.amber{background:rgba(240,192,64,0.07);border:0.5px solid rgba(240,192,64,0.22);color:var(--text-dim)}
+    .callout.amber strong{color:var(--amber)}
+
+    .support-section{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:90px 48px;text-align:center}
+    .support-inner{max-width:640px;margin:0 auto}
+    .support-icon{width:56px;height:56px;border-radius:14px;background:var(--cyan-dim);border:0.5px solid rgba(125,232,200,0.25);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 28px}
+    .support-email-box{margin-top:32px;padding:28px 32px;background:var(--surface);border:0.5px solid var(--border);border-radius:16px;position:relative;overflow:hidden}
+    .support-email-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),transparent)}
+    .support-email-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+    .support-email-link{font-family:'DM Mono',monospace;font-size:20px;color:var(--cyan);text-decoration:none;display:inline-block;letter-spacing:0.02em;word-break:break-all}
+    .support-email-link:hover{text-shadow:0 0 20px var(--cyan-glow)}
+    .support-meta{margin-top:20px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.05em;line-height:1.8}
+    .support-btn{display:inline-block;margin-top:26px;padding:13px 30px;border-radius:100px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;box-shadow:0 0 30px rgba(125,232,200,0.25)}
+    .support-btn:hover{transform:translateY(-2px);box-shadow:0 0 45px rgba(125,232,200,0.4)}
+
+    footer{border-top:0.5px solid var(--border);padding:60px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
+    .footer-logo{display:flex;align-items:center;gap:10px}
+    .footer-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);opacity:0.5}
+    .footer-name{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted)}
+    .footer-copy{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.08em}
+    .footer-links{display:flex;gap:28px}
+    .footer-links a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--text)}
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+      .nav-links li:not(:last-child) { display: none; }
+      .page-hero { padding: 110px 20px 60px; }
+      section { padding: 50px 20px; }
+      .faq-question { padding: 20px 20px; font-size: 14px; }
+      .faq-answer-inner { padding: 0 20px 22px; }
+      .support-section { padding: 60px 20px; }
+      .support-email-box { padding: 22px 20px; }
+      .support-email-link { font-size: 16px; }
+      footer { flex-direction: column; gap: 20px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-dot"></div>
+    <span class="nav-name">Bilu</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="science.html">Science</a></li>
+    <li><a href="index.html#pricing">Pricing</a></li>
+    <li><a href="faq.html">Help</a></li>
+    <li><a href="index.html#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow">Help & FAQ</div>
+  <h1 class="page-title">Questions, <em>answered.</em></h1>
+  <p class="page-subtitle">Everything about licenses, billing, devices, and what Bilu actually does. If something is not covered here, our team is one email away.</p>
+</div>
+
+<!-- LICENSE KEY -->
+<section id="license-key">
+  <div class="section-eyebrow">Your License</div>
+  <h2 class="section-title">Where do I find my <em>license key?</em></h2>
+  <p class="section-body">After purchasing Bilu Pro, your license key is sent automatically by email from Lemon Squeezy, our payment processor.</p>
+  <div class="faq-group">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        I do not see the email with my key
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Check your spam or promotions folder first, since automated receipt emails sometimes land there. The email comes from Lemon Squeezy and includes your unique license key along with a receipt for your purchase. If you still cannot locate it after checking spam, reach out through the support section below and we will look up your order.
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What does the key look like and where do I enter it?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Your key is a long alphanumeric string. Open Bilu, go to the Settings panel, scroll to the License section, paste your key into the field, and click Activate License. Once verified, your plan will switch to Pro and every locked feature unlocks immediately.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVATION / DEACTIVATION -->
+<section id="activation">
+  <div class="section-eyebrow">Devices</div>
+  <h2 class="section-title">Activating and <em>deactivating</em> a device</h2>
+  <p class="section-body">Each license can be active on a limited number of devices at once. Deactivating simply frees up that slot so you can use your key elsewhere. It does not cancel your subscription or refund your purchase.</p>
+  <div class="faq-group">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I activate Bilu on a new Mac?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Open Settings inside Bilu, paste your license key into the field under the License section, and click Activate License. If your key is already in use on another device and you have reached your device limit, deactivate it there first.
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I deactivate a device?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Inside Settings, under the License section while your plan shows Pro, click Deactivate This Device and confirm. This frees up that activation slot immediately, and you can activate on a new device right away using the same key.
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        I sold or reset my Mac and forgot to deactivate first
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No problem, this happens. Reach out through the support section below with your license key and we can manually free up the activation slot on our end.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BILLING -->
+<section id="billing">
+  <div class="section-eyebrow">Billing</div>
+  <h2 class="section-title">Managing or <em>canceling</em> your plan</h2>
+  <p class="section-body">Subscriptions are billed and managed entirely through Lemon Squeezy, our payment processor. We never see or store your card details.</p>
+  <div class="faq-group">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I cancel my subscription?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Every purchase confirmation email from Lemon Squeezy includes a link to manage your subscription, including cancellation, updating your payment method, and viewing invoices. You can also access your subscription directly at <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener">app.lemonsqueezy.com/my-orders</a> using the email address you purchased with.
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What happens to my Pro features if I cancel?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Pro features stay active until the end of your current billing period. Once that period ends, Bilu automatically returns to the Free tier on your next scheduled license check. You are welcome to reactivate anytime.
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What is your refund policy?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          If Bilu genuinely was not a fit, reach out through the support section below within 14 days of your purchase and explain what happened. Refunds are reviewed and processed manually through Lemon Squeezy once approved, so please allow a few business days.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT BILU DOES / DOES NOT DO -->
+<section id="about-bilu">
+  <div class="section-eyebrow">About Bilu</div>
+  <h2 class="section-title">What Bilu does <em>and does not do</em></h2>
+  <p class="section-body">Bilu is a bilateral stimulation tool built to support focus and nervous system regulation while you work. We are upfront about what that means and what it does not mean.</p>
+  <div class="faq-group">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Does Bilu treat anxiety, ADHD, or any clinical condition?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No. Bilu supports emotional regulation and stress reduction through bilateral stimulation, but it is not a medical device and it is not a substitute for therapy, medication, or professional treatment of any clinical condition. If you are managing a diagnosed condition, please continue working with your provider.
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Does Bilu improve trading results or betting odds?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No. Bilu does not predict markets, analyze odds, or guarantee any financial outcome. What it offers is a steadier nervous system so the decision in front of you is yours to make clearly, not a system that makes decisions for you.
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Where can I read the actual research behind this?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          We put together a full breakdown of the science behind bilateral stimulation, including the research it is based on, on our dedicated <a href="science.html">Science page</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout amber">
+    <strong>A note on this page:</strong> Bilu is a focus and regulation tool, not medical advice, a financial product, or a guaranteed outcome of any kind. If something here feels unclear, our team is happy to explain further, just reach out below.
+  </div>
+</section>
+
+<!-- SUPPORT / CONTACT -->
+<div class="support-section" id="contact">
+  <div class="support-inner">
+    <div class="support-icon">✉️</div>
+    <div class="section-eyebrow" style="justify-content:center">Still Need Help</div>
+    <h2 class="section-title">Talk to a <em>real person.</em></h2>
+    <p class="section-body" style="margin:0 auto;text-align:center">Whether it is about your license, a billing question, or something about the app itself, send us an email and we will get back to you directly.</p>
+
+    <div class="support-email-box">
+      <div class="support-email-label">Email Support</div>
+      <a href="mailto:support@bilufocus.com" class="support-email-link">support@bilufocus.com</a>
+      <div class="support-meta">
+        We typically reply within one to two business days.<br>
+        Please include your license key if your question is about billing or activation.
+      </div>
+    </div>
+
+    <a href="mailto:support@bilufocus.com" class="support-btn">Email Us</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo"><div class="footer-dot"></div><span class="footer-name">Bilu</span></div>
+  <div class="footer-copy">&copy; 2025 Bilu. All rights reserved.</div>
+  <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="science.html">Science</a><a href="faq.html#contact">Contact</a></div>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item')
+    const wasOpen = item.classList.contains('open')
+    item.parentElement.querySelectorAll('.faq-item.open').forEach(el => {
+      if (el !== item) el.classList.remove('open')
+    })
+    item.classList.toggle('open', !wasOpen)
+  }
+</script>
+
+</body>
+</html>
