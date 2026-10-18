@@ -166,6 +166,13 @@
     .lifetime-banner{max-width:800px;margin:0 auto 32px;padding:14px 24px;background:rgba(240,192,64,0.08);border:0.5px solid rgba(240,192,64,0.3);border-radius:100px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.05em;color:var(--amber);text-align:center}
     .lifetime-note{margin-top:16px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.06em;line-height:1.6}
 
+    /* Main demo video (after testimonials) */
+    .showcase-frame{position:relative;max-width:960px;margin:60px auto 0;aspect-ratio:16/9;background:#000;border:0.5px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5),0 0 60px rgba(125,232,200,0.05);cursor:pointer}
+    .showcase-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:2;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+    .showcase-frame .demo-video{object-fit:contain;background:#000}
+    .showcase-frame:hover .demo-controls,.showcase-frame.controls-visible .demo-controls{opacity:1}
+    @media (hover:none){.showcase-frame .demo-controls{opacity:1}}
+
     /* ── Mobile responsiveness ─────────────────────────── */
     @media (max-width: 900px) {
       section, .hr-section { padding: 80px 24px; }
@@ -262,10 +269,31 @@
   </div>
 </div>
 
+<!-- MAIN DEMO VIDEO -->
+<section id="showcase" style="text-align:center">
+  <div class="section-eyebrow" style="justify-content:center">Bilu /div>
+  <p class="section-body reveal" style="margin:0 auto;text-align:center">A quick look</p>
+
+  <div class="showcase-frame reveal" id="showcaseFrame">
+    <video class="demo-video" id="mainDemoVideo" muted loop playsinline preload="metadata">
+      <source src="assets/Maindemo.mp4" type="video/mp4">
+    </video>
+    <div class="demo-controls" onclick="event.stopPropagation()">
+      <button class="demo-btn" id="mainPlayBtn">▶</button>
+      <div class="demo-progress-wrap" id="mainProgressWrap">
+        <div class="demo-progress-bar" id="mainProgressBar"></div>
+      </div>
+      <span class="demo-time" id="mainTime">0:00</span>
+      <button class="demo-btn" id="mainMuteBtn">🔇</button>
+      <button class="demo-btn" id="mainFsBtn">⛶</button>
+    </div>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section id="how">
   <div class="section-eyebrow">How It Works</div>
-  <h2 class="section-title">Engineered to sustain<br>your <em>relentless drive.</em></h2>
+  <h2 class="section-title">Engineered to <br>keep you <em>going.</em></h2>
   <p class="section-body">Most focus tools ask you to pause. Bilu works while you work — a barely-visible overlay running silently in the background, doing the heavy lifting your nervous system never gets a break from.</p>
   <div class="how-grid">
     <div class="how-steps">
@@ -310,7 +338,7 @@
       <div>
         <div class="section-eyebrow">Burnout Prevention</div>
         <h2 class="section-title">Your brain<br>needs a <em>cooling<br>system.</em></h2>
-        <p class="section-body" style="margin-bottom:24px">Burnout isn't caused by working hard. It's caused by your nervous system never getting a chance to regulate — accumulating stress day after day until the system breaks down.</p>
+        <p class="section-body" style="margin-bottom:24px">Burnout isn't caused by working hard. It's caused by your nervous system never getting a chance to regulate, accumulating stress day after day until the system breaks down.</p>
         <p class="section-body" style="margin-bottom:24px">Bilu acts like a passive coolant running in the background. The bilateral stimulus continuously dampens amygdala reactivity, preventing the cortisol accumulation that leads to exhaustion, emotional depletion, and cognitive decline.</p>
         <p class="section-body" style="font-size:13px;color:var(--text-muted)">Think of it as the difference between a car that runs hot all day and one with a properly functioning cooling system. Same engine. Very different outcome over time.</p>
       </div>
@@ -345,8 +373,7 @@
   <div>
     <div class="section-eyebrow">Heart Rate Integration</div>
     <h2 class="section-title">Your body tells it<br>when to <em>intervene.</em></h2>
-    <p class="section-body" style="margin-bottom:20px">Connect a compatible Bluetooth heart rate monitor and Bilu becomes adaptive. When your BPM spikes above your personal baseline, the app responds — slowing the ball, shifting to amber and red, and guiding you through a breathing cycle until you're calm.</p>
-    <p class="section-body" style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Compatible with Polar H10, Polar Verity Sense, and any standard Bluetooth LE heart rate monitor.</p>
+    <p class="section-body" style="margin-bottom:20px">Connect a compatible Bluetooth heart rate monitor and Bilu becomes adaptive. When your BPM spikes above your personal baseline, the app responds, slowing the ball, shifting to amber and red, and guiding you through a breathing cycle until you're calm.</p>
     <p class="section-body" style="font-size:13px;color:var(--text-muted)">Apple Watch integration — coming soon.</p>
   </div>
   <div style="display:flex;flex-direction:column;gap:20px;">
@@ -914,6 +941,58 @@
       })
     }, { threshold: 0.4 })
     demoObserver.observe(video)
+  })()
+</script>
+
+<script>
+  /* ── Main demo video (after testimonials) ── */
+  ;(function(){
+    const video = document.getElementById('mainDemoVideo')
+    if (!video) return
+    const frame = document.getElementById('showcaseFrame')
+    const playBtn = document.getElementById('mainPlayBtn')
+    const muteBtn = document.getElementById('mainMuteBtn')
+    const fsBtn = document.getElementById('mainFsBtn')
+    const progressWrap = document.getElementById('mainProgressWrap')
+    const progressBar = document.getElementById('mainProgressBar')
+    const timeEl = document.getElementById('mainTime')
+
+    const toggle = () => { video.paused ? video.play().catch(()=>{}) : video.pause() }
+    playBtn.addEventListener('click', toggle)
+    frame.addEventListener('click', toggle)
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted
+      muteBtn.textContent = video.muted ? '🔇' : '🔊'
+    })
+    fsBtn.addEventListener('click', () => {
+      if (video.requestFullscreen) video.requestFullscreen()
+      else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen()
+    })
+    progressWrap.addEventListener('click', (e) => {
+      const rect = progressWrap.getBoundingClientRect()
+      const pct = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width))
+      if (video.duration) video.currentTime = pct * video.duration
+    })
+    video.addEventListener('timeupdate', () => {
+      if (!video.duration) return
+      progressBar.style.width = (video.currentTime / video.duration * 100) + '%'
+      const m = Math.floor(video.currentTime / 60), s = Math.floor(video.currentTime % 60)
+      timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s
+    })
+    video.addEventListener('play',  () => { playBtn.textContent = '❚❚' })
+    video.addEventListener('pause', () => { playBtn.textContent = '▶' })
+
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          video.muted = true
+          muteBtn.textContent = '🔇'
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      })
+    }, { threshold: 0.4 }).observe(video)
   })()
 </script>
 </body>
